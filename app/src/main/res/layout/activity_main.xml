@@ -13,10 +13,9 @@
 
     <ImageView
         android:id="@+id/backgroundIV"
-        android:layout_width="411dp"
-        android:layout_height="731dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +26,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/pickerScreen"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/pickerTitleShadow"
@@ -59,7 +59,6 @@
             android:id="@+id/wholeTilesGrid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0.5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -74,6 +73,7 @@
                     android:id="@+id/big0"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:onClick="refreshPicker"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/big1"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -85,6 +85,7 @@
                     android:id="@+id/big1"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:onClick="refreshPicker"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/big2"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -96,6 +97,7 @@
                     android:id="@+id/big2"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:onClick="refreshPicker"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/big3"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -107,6 +109,7 @@
                     android:id="@+id/big3"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:onClick="refreshPicker"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -269,58 +272,58 @@
                     app:layout_constraintTop_toBottomOf="@+id/smallRow1">
 
                     <ImageView
-                        android:id="@+id/imageView41"
+                        android:id="@+id/small10"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView40"
+                        app:layout_constraintEnd_toStartOf="@+id/small12"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/small14"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/small11"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/small13"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/tilebacking" />
 
                     <ImageView
-                        android:id="@+id/imageView40"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView42"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView41"
-                        app:srcCompat="@drawable/tilebacking" />
-
-                    <ImageView
-                        android:id="@+id/imageView44"
+                        android:id="@+id/small12"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView43"
+                        app:layout_constraintStart_toEndOf="@+id/small10"
                         app:srcCompat="@drawable/tilebacking" />
 
                     <ImageView
-                        android:id="@+id/imageView42"
+                        android:id="@+id/small13"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView43"
+                        app:layout_constraintEnd_toStartOf="@+id/small14"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView40"
+                        app:layout_constraintStart_toEndOf="@+id/small11"
                         app:srcCompat="@drawable/tilebacking" />
 
                     <ImageView
-                        android:id="@+id/imageView43"
+                        android:id="@+id/small14"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView44"
+                        app:layout_constraintEnd_toStartOf="@+id/small10"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView42"
+                        app:layout_constraintStart_toEndOf="@+id/small13"
                         app:srcCompat="@drawable/tilebacking" />
 
                 </android.support.constraint.ConstraintLayout>
@@ -337,58 +340,58 @@
                     app:layout_constraintTop_toBottomOf="@+id/smallRow2">
 
                     <ImageView
-                        android:id="@+id/imageView46"
+                        android:id="@+id/small15"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView45"
+                        app:layout_constraintEnd_toStartOf="@+id/small16"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:srcCompat="@drawable/tilebacking" />
 
                     <ImageView
-                        android:id="@+id/imageView45"
+                        android:id="@+id/small16"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView47"
+                        app:layout_constraintEnd_toStartOf="@+id/small17"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView46"
+                        app:layout_constraintStart_toEndOf="@+id/small15"
                         app:srcCompat="@drawable/tilebacking" />
 
                     <ImageView
-                        android:id="@+id/imageView47"
+                        android:id="@+id/small17"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView48"
+                        app:layout_constraintEnd_toStartOf="@+id/small18"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView45"
+                        app:layout_constraintStart_toEndOf="@+id/small16"
                         app:srcCompat="@drawable/tilebacking" />
 
                     <ImageView
-                        android:id="@+id/imageView48"
+                        android:id="@+id/small18"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView49"
+                        app:layout_constraintEnd_toStartOf="@+id/small19"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView47"
+                        app:layout_constraintStart_toEndOf="@+id/small17"
                         app:srcCompat="@drawable/tilebacking" />
 
                     <ImageView
-                        android:id="@+id/imageView49"
+                        android:id="@+id/small19"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView48"
+                        app:layout_constraintStart_toEndOf="@+id/small18"
                         app:srcCompat="@drawable/tilebacking" />
 
                 </android.support.constraint.ConstraintLayout>
