@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
         // For tracking how many random tiles the user has chosen
     int smallNum, bigNum, totalNum;
-    int maxBig = 4;
+    int maxNum = 6;
 
 
         // When user taps a tile. Get the tile row to determine if its big.
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         totalNum = smallNum + bigNum;
-        if (totalNum > 5){
+        if (totalNum >= maxNum){
             Toast.makeText(getApplicationContext(), "Starting!\nBig: " + Integer.toString(bigNum) + "\nSmall: " + Integer.toString(smallNum), Toast.LENGTH_LONG).show();
         }
 
@@ -54,7 +54,25 @@ public class MainActivity extends AppCompatActivity {
     } // end of randomTileClicked
 
 
+    public void startGameScreen(View view){
 
+            // Need to: hide choosing screen.
+            // Show game screen
+            // separate method that takes big and small and chooses numbers
+            //      fills the origArray tiles and makes them blue
+
+
+    }
+
+        // takes big and small and generates 6x numbers
+    public void numberChooser(View view){
+
+
+    }
+    
+
+        // Make a method that devises a target answer and the workings from the origArray
+    public void
 
         // Make all mystery tiles 50% transparent, the pickerScreen visible, and reset tile counts to 0
     public void refreshPicker(View view){
