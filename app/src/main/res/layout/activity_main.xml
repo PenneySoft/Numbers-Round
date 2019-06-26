@@ -15,6 +15,8 @@
         android:id="@+id/backgroundIV"
         android:layout_width="411dp"
         android:layout_height="731dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,278 +29,374 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/bigBacking"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/pickerTitleShadow"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:text="Pick 6 tiles"
+            android:textColor="#80202020"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/pickerTitleTV"
+            app:layout_constraintTop_toTopOf="@+id/pickerTitleTV" />
+
+        <TextView
+            android:id="@+id/pickerTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="Pick 6 tiles"
+            android:textColor="#F0F0F0"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/wholeTilesGrid"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.36">
-
-            <ImageView
-                android:id="@+id/big0"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                app:layout_constraintEnd_toStartOf="@+id/big1"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/tilebacking" />
-
-            <ImageView
-                android:id="@+id/big1"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                app:layout_constraintEnd_toStartOf="@+id/big2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/big0"
-                app:srcCompat="@drawable/tilebacking" />
-
-            <ImageView
-                android:id="@+id/big2"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                app:layout_constraintEnd_toStartOf="@+id/big3"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/big1"
-                app:srcCompat="@drawable/tilebacking" />
-
-            <ImageView
-                android:id="@+id/big3"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/big2"
-                app:srcCompat="@drawable/tilebacking" />
-        </android.support.constraint.ConstraintLayout>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/smallBacking"
+            android:id="@+id/wholeTilesGrid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@id/bigBacking">
+            android:alpha="0.5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/smallRow0"
+                android:id="@+id/bigBacking"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="50dp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="8dp">
 
                 <ImageView
-                    android:id="@+id/imageView31"
+                    android:id="@+id/big0"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView30"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/big1"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/tilebacking" />
 
                 <ImageView
-                    android:id="@+id/imageView30"
+                    android:id="@+id/big1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView32"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/big2"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView31"
+                    app:layout_constraintStart_toEndOf="@+id/big0"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/tilebacking" />
 
                 <ImageView
-                    android:id="@+id/imageView32"
+                    android:id="@+id/big2"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView33"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/big3"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView30"
+                    app:layout_constraintStart_toEndOf="@+id/big1"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/tilebacking" />
 
                 <ImageView
-                    android:id="@+id/imageView33"
+                    android:id="@+id/big3"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView34"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView32"
-                    app:srcCompat="@drawable/tilebacking" />
-
-                <ImageView
-                    android:id="@+id/imageView34"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView35"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView33"
-                    app:srcCompat="@drawable/tilebacking" />
-
-                <ImageView
-                    android:id="@+id/imageView35"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView34"
+                    app:layout_constraintStart_toEndOf="@+id/big2"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/tilebacking" />
-
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/smallRow1"
+                android:id="@+id/smallBacking"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/smallRow0">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                app:layout_constraintTop_toBottomOf="@+id/bigBacking">
 
-                <ImageView
-                    android:id="@+id/imageView31"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView30"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/tilebacking" />
-
-                <ImageView
-                    android:id="@+id/imageView30"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView32"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView31"
-                    app:srcCompat="@drawable/tilebacking" />
-
-                <ImageView
-                    android:id="@+id/imageView32"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView33"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView30"
-                    app:srcCompat="@drawable/tilebacking" />
-
-                <ImageView
-                    android:id="@+id/imageView33"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView34"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView32"
-                    app:srcCompat="@drawable/tilebacking" />
-
-                <ImageView
-                    android:id="@+id/imageView34"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView35"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView33"
-                    app:srcCompat="@drawable/tilebacking" />
-
-                <ImageView
-                    android:id="@+id/imageView35"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/smallRow0"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView34"
-                    app:srcCompat="@drawable/tilebacking" />
-
-            </android.support.constraint.ConstraintLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/smallRow2"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/smallRow1">
-
-                <ImageView
-                    android:id="@+id/imageView31"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView30"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/tilebacking" />
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/imageView30"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView32"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView31"
-                    app:srcCompat="@drawable/tilebacking" />
+                    <ImageView
+                        android:id="@+id/small0"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/small1"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:srcCompat="@drawable/tilebacking" />
 
-                <ImageView
-                    android:id="@+id/imageView32"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView33"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView30"
-                    app:srcCompat="@drawable/tilebacking" />
+                    <ImageView
+                        android:id="@+id/small1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/small2"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/small0"
+                        app:srcCompat="@drawable/tilebacking" />
 
-                <ImageView
-                    android:id="@+id/imageView33"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView34"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView32"
-                    app:srcCompat="@drawable/tilebacking" />
+                    <ImageView
+                        android:id="@+id/small2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/small3"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/small1"
+                        app:srcCompat="@drawable/tilebacking" />
 
-                <ImageView
-                    android:id="@+id/imageView34"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    <ImageView
+                        android:id="@+id/small3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/small4"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/small2"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/small4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/small3"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/smallRow1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView33"
-                    app:srcCompat="@drawable/tilebacking" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/smallRow0">
+
+                    <ImageView
+                        android:id="@+id/small5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/small9"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/small6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/small7"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/small7"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/small8"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/small6"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/small8"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/small9"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/small7"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/small9"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/small5"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/small8"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/smallRow2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/smallRow1">
+
+                    <ImageView
+                        android:id="@+id/imageView41"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView40"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/imageView40"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView42"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imageView41"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/imageView44"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imageView43"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/imageView42"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView43"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imageView40"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/imageView43"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView44"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imageView42"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/smallRow3"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/smallRow2">
+
+                    <ImageView
+                        android:id="@+id/imageView46"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView45"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/imageView45"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView47"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imageView46"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/imageView47"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView48"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imageView45"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/imageView48"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView49"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imageView47"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                    <ImageView
+                        android:id="@+id/imageView49"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imageView48"
+                        app:srcCompat="@drawable/tilebacking" />
+
+                </android.support.constraint.ConstraintLayout>
 
             </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
