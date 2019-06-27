@@ -225,6 +225,12 @@ public class MainActivity extends AppCompatActivity {
         animation2.setDuration(500);
         animation2.start();
 
+        ImageView background = (ImageView)findViewById(R.id.backgroundIV);
+        ObjectAnimator animationBG = ObjectAnimator.ofFloat(background, "translationX", -50f);
+        animationBG.setDuration(500);
+        animationBG.start();
+
+
             // Separate method that takes big and small and chooses numbers
         numberChooser(bigNum, smallNum);
 
