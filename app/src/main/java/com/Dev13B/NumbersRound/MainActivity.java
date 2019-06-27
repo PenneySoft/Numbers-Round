@@ -1,5 +1,6 @@
 package com.Dev13B.NumbersRound;
 
+import android.animation.ObjectAnimator;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -204,23 +205,40 @@ public class MainActivity extends AppCompatActivity {
 
     public void startGameScreen(View view){
 
+
+
             // Hide choosing screen.
         ViewGroup pickerScreen = (ViewGroup)findViewById(R.id.pickerScreen);
-        pickerScreen.setVisibility(View.GONE);
 
-            // Show game screen
+        ObjectAnimator animation = ObjectAnimator.ofFloat(pickerScreen, "translationX", -1500f);
+        animation.setDuration(500);
+        animation.start();
+        // pickerScreen.setVisibility(View.GONE);
+
+             // Show game screen
         ViewGroup gameScreen = (ViewGroup)findViewById(R.id.gameScreen);
         gameScreen.setVisibility(View.VISIBLE);
+
+        gameScreen.setTranslationX(1500f);
+
+        ObjectAnimator animation2 = ObjectAnimator.ofFloat(gameScreen, "translationX", 0f);
+        animation2.setDuration(500);
+        animation2.start();
 
             // Separate method that takes big and small and chooses numbers
         numberChooser(bigNum, smallNum);
 
+            // Clear target at top of screen
+        TextView targetTV = (TextView)findViewById(R.id.targetTV);
+        targetTV.setText("");
 
             // method to fill the origArray tiles and makes them blue
 
     }
 
-
+    public void clearTest(View view){
+        numberChooser(bigNum, smallNum);
+    }
 
 
         // Takes big and small and generates 6x numbers
@@ -260,6 +278,12 @@ public class MainActivity extends AppCompatActivity {
         for (int i=0; i<4; i++){
             tileControl.clearText(1, i);
         }
+
+            // Hide clock hand, replace with GO button
+        ImageView clockHandIV = (ImageView)findViewById(R.id.clockhandIV);
+        clockHandIV.setVisibility(View.GONE);
+            // GO button appear
+
 
 
     }   // end of numberChooser()
