@@ -424,8 +424,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/gameScreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -453,11 +453,27 @@
                 android:id="@+id/clockhandIV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:rotation="180"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/targetIV"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/clockhand" />
+
+            <TextView
+                android:id="@+id/startButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="startTimer"
+                android:text="Start"
+                android:textColor="#5F2424"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/targetIV"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.47000003" />
 
             <ImageView
                 android:id="@+id/targetIV"
@@ -489,12 +505,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sumtilecont">
+            app:layout_constraintTop_toBottomOf="@+id/sumtilecont"
+            app:layout_constraintVertical_bias="0.13999999">
 
             <LinearLayout
                 android:id="@+id/operatorLinear"
@@ -526,7 +543,7 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="12dp"
                     android:layout_weight="4"
-                    android:onClick="clearTest"
+                    android:onClick="renew"
                     app:srcCompat="@drawable/clear" />
 
                 <ImageView
@@ -534,6 +551,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="startTimer"
                     app:srcCompat="@drawable/mult" />
 
                 <ImageView
@@ -541,6 +559,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="showEquation"
                     app:srcCompat="@drawable/div" />
             </LinearLayout>
 
@@ -568,6 +587,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/whiteboard" />
+
+            <TextView
+                android:id="@+id/boardTV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:textColor="#B2000000"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/boardIV"
+                app:layout_constraintEnd_toStartOf="@+id/boardIV"
+                app:layout_constraintStart_toStartOf="@+id/boardIV"
+                app:layout_constraintTop_toTopOf="@+id/boardIV"
+                app:layout_constraintVertical_bias="0.49" />
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
