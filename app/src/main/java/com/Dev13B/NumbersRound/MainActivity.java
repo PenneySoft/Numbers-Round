@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -18,6 +19,10 @@ import org.w3c.dom.Text;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
+
+import java.lang.Math;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -238,6 +243,14 @@ public class MainActivity extends AppCompatActivity {
         int[] equationBuffer;
         StringBuilder stringBuffer = new StringBuilder();
 
+        if (equationLog.size() < 4 ){
+            boardTV.setTextSize(40.0f);
+        } else {
+            boardTV.setTextSize(34.0f);
+        }
+
+
+
         // main for loop iterates through lines to fill stringBuffer
 
         for (int i=0; i<equationLog.size(); i++){
@@ -259,6 +272,7 @@ public class MainActivity extends AppCompatActivity {
     } // end of showEquation method
 
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
     public void startGameScreen(View view){
@@ -306,10 +320,10 @@ public class MainActivity extends AppCompatActivity {
     public void renew(View view){
         numberChooser(bigNum, smallNum);
         generateTarget();
-        ImageView clockhand = (ImageView)findViewById(R.id.clockhandIV);
-        clockhand.setVisibility(View.GONE);
         TextView startButton = (TextView)findViewById(R.id.startButton);
         startButton.setVisibility(View.VISIBLE);
+
+
     }
 
     public void startTimer(View view){
@@ -339,6 +353,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView clockHandIV = (ImageView)findViewById(R.id.clockhandIV);
         clockHandIV.setVisibility(View.VISIBLE);
+        clockHandIV.clearAnimation();
 
         RotateAnimation rotate = new RotateAnimation(180, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(30000);
@@ -348,6 +363,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void stopClock(View view){
+        ImageView clockHandIV = (ImageView)findViewById(R.id.clockhandIV);
+        // clockHandIV.setRotation(0.0f);
+        float rotation = clockHandIV.getRotation();
+        clockHandIV.clearAnimation();
+        Log.i("Info", "FloatyMcFloatFace: " + rotation);
+        // clockHandIV.setVisibility(View.INVISIBLE);
+        // clockHandIV.animate().rotationBy(360.0f).setDuration(3000);
+
+    }
 
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -441,6 +467,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Devises a target answer from global origArr, and stores the workings for global equationLog
     public void generateTarget(){
+
+        Set<Integer> easyAnswerTS;
 
         // Clear target at top of screen
         TextView targetTV = (TextView)findViewById(R.id.targetTV);
@@ -665,20 +693,37 @@ public class MainActivity extends AppCompatActivity {
 
                 } // end of (coin toss) outer if
 
+
+                // Check to see if the answer can be easily/quickly made in 1 line. If so, continue while loop.
+                easyAnswerTS = new TreeSet<Integer>();
+
+                for (int i=0; i<origArr.length; i++){
+                    for (int j=i+1; j<origArr.length; j++){
+
+                        easyAnswerTS.add(origArr[i] + origArr[j]);
+                        easyAnswerTS.add(Math.abs(origArr[i] - origArr[j]));
+                        easyAnswerTS.add(origArr[i] * origArr[j]);
+                    }
+                }
+
+                System.out.println(easyAnswerTS);
+
+                if (easyAnswerTS.contains(finalTarget)) {
+                    gotTarget=false;
+                }
+
+
+
+
+
             } // (while 1) end. Made sum(s) and calc(s), have we finished though and got a potential answer?
 
 
 
+
+
+
         } // end of Master while 0
-
-        for (ArrayList<Integer> k : equationLog) {
-
-            System.out.println(k);
-        }
-
-        System.out.println("\n\nWe have a result for user to target: " + finalTarget);
-        System.out.println(equationLog);
-
 
     }   // End of monster generateTarget() method
 
@@ -694,13 +739,14 @@ public class MainActivity extends AppCompatActivity {
             case 1: result = a-b; if (result<1){
                 successOrFail=0;
             } break;
-            case 2: result = a*b; break;
+            case 2: result = a*b; if (result == a){successOrFail=0;} break;
             case 3: if (a%b != 0){
                 successOrFail=0;
                 result = 0;
             } else {
                 divideResult = a/b;
                 result = (int)divideResult;
+                if (result == a) {successOrFail = 0;}
             } break;
             default: successOrFail = 0; result = 0;
         } // end of switch
@@ -712,7 +758,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // Make all mystery tiles 50% transparent, the pickerScreen visible, and reset tile counts to 0
+        // Make all mystery tiles 50% transparent, the gameScreen GONE, the pickerScreen VISIBLE, and reset tile counts to 0
     public void refreshPicker(View view){
 
         smallNum = 0;
