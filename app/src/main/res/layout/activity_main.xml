@@ -466,6 +466,7 @@
                 android:id="@+id/startButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/coolveticaF"
                 android:onClick="startTimer"
                 android:text="Start"
                 android:textColor="#5F2424"
