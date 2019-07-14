@@ -698,6 +698,7 @@ public class MainActivity extends AppCompatActivity {
                 easyAnswerTS = new TreeSet<Integer>();
 
                 for (int i=0; i<origArr.length; i++){
+                    easyAnswerTS.add(origArr[i]);
                     for (int j=i+1; j<origArr.length; j++){
 
                         easyAnswerTS.add(origArr[i] + origArr[j]);

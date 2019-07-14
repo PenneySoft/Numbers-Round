@@ -774,8 +774,10 @@
 
             <LinearLayout
                 android:id="@+id/sumTileLinear"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -801,24 +803,24 @@
                     android:layout_weight="1"
                     app:srcCompat="@drawable/combined" />
 
-                <ImageView
-                    android:id="@+id/sum3"
-                    android:layout_width="88dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/combined" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/sumTextLinear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
                     android:id="@+id/sumTV0"
                     android:layout_width="80dp"
                     android:layout_height="55dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/coolveticaa"
                     android:gravity="center"
@@ -831,6 +833,8 @@
                     android:id="@+id/sumTV1"
                     android:layout_width="80dp"
                     android:layout_height="55dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/coolveticaa"
                     android:gravity="center"
@@ -843,17 +847,8 @@
                     android:id="@+id/sumTV2"
                     android:layout_width="80dp"
                     android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/coolveticaa"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/sumTV3"
-                    android:layout_width="80dp"
-                    android:layout_height="55dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/coolveticaa"
                     android:gravity="center"
