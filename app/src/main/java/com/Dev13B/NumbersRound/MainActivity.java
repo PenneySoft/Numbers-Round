@@ -48,12 +48,11 @@ public class MainActivity extends AppCompatActivity {
         // ArrayList that logs all the equation lines
     ArrayList<ArrayList<Integer>> equationLog; // might need to be defined as null, maybe not though
 
-
     Random rand = new Random();
 
-
-
-
+    boolean gameActive;
+    int posInCalc;
+    ArrayList<ArrayList<Integer>> historyAL;
 
 
         // Custom methods
@@ -63,23 +62,10 @@ public class MainActivity extends AppCompatActivity {
     public class TileControl {
 
             // Sets tileBG (0, 5, "blue")
-        public void setBG(int row, int column, String colour){
+        public void setBG(int column, String colour){
 
-            ViewGroup parentVG = null;
-            ImageView childIV;
-
-
-            switch (row) {
-                case (0):
-                parentVG = (ViewGroup)findViewById(R.id.origTileLinear);
-                break;
-                case (1):
-                parentVG = (ViewGroup)findViewById(R.id.sumTileLinear);
-                break;
-                default:
-            } // End switch
-
-            childIV = (ImageView)parentVG.getChildAt(column);
+            ViewGroup parentVG = (ViewGroup)findViewById(R.id.origTileLinear);
+            ImageView childIV = (ImageView)parentVG.getChildAt(column);
 
             switch(colour) {
                 case "blue":
@@ -102,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
             }
         } // end allBlue()
 
-
-
             // Set text of tile
         public void setText(int row, int column, int content){
             ViewGroup parentVG = null;
@@ -123,24 +107,11 @@ public class MainActivity extends AppCompatActivity {
             childTV.setText(Integer.toString(content));
         } // End of setText
 
-
-
             // Clear Text of tile
-        public void clearText(int row, int column){
-            ViewGroup parentVG = null;
-            TextView childTV;
+        public void clearText(int column){
+            ViewGroup parentVG = (ViewGroup)findViewById(R.id.sumTextLinear);
+            TextView childTV = (TextView)parentVG.getChildAt(column);
 
-            switch (row) {
-                case 0:
-                parentVG = (ViewGroup)findViewById(R.id.origTextLinear);
-                break;
-                case 1:
-                parentVG = (ViewGroup)findViewById(R.id.sumTextLinear);
-                break;
-                default:
-            } // End switch
-
-            childTV = (TextView)parentVG.getChildAt(column);
             childTV.setText("");
         } // End of clearText
 
@@ -197,8 +168,7 @@ public class MainActivity extends AppCompatActivity {
     } // End of EqOp class
 
 
-    // -------------------------------------------------
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         // When user taps a tile. Get the tile row to determine if its big.
     public void randomTileClicked(View view){
@@ -233,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     } // end of randomTileClicked
-
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -271,9 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
     } // end of showEquation method
 
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
     public void startGameScreen(View view){
 
@@ -310,9 +277,7 @@ public class MainActivity extends AppCompatActivity {
         generateTarget();
 
 
-
     } // end of start game screen
-
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -326,7 +291,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     public void startTimer(View view){
+
+        gameActive = true;
+        posInCalc = 0;
+        historyAL = new ArrayList<ArrayList<Integer>>();
+        historyAL.add(new ArrayList<Integer>());
 
         TextView startButton = (TextView)findViewById(R.id.startButton);
         startButton.setVisibility(View.GONE);
@@ -363,21 +335,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    public void stopClock(View view){
-        ImageView clockHandIV = (ImageView)findViewById(R.id.clockhandIV);
-        // clockHandIV.setRotation(0.0f);
-        float rotation = clockHandIV.getRotation();
-        clockHandIV.clearAnimation();
-        Log.i("Info", "FloatyMcFloatFace: " + rotation);
-        // clockHandIV.setVisibility(View.INVISIBLE);
-        // clockHandIV.animate().rotationBy(360.0f).setDuration(3000);
-
-    }
-
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
         // Takes big and small and generates 6x numbers, equation too but in separate method
     public void numberChooser(int big, int small){
@@ -413,8 +371,8 @@ public class MainActivity extends AppCompatActivity {
         for (int i=0; i<6; i++){
             tileControl.setText(0, i, origArr[i]);
         }
-        for (int i=0; i<4; i++){
-            tileControl.clearText(1, i);
+        for (int i=0; i<3; i++){
+            tileControl.clearText(i);
         }
 
             // Hide clock hand, replace with GO button
@@ -425,9 +383,7 @@ public class MainActivity extends AppCompatActivity {
 
     }   // end of numberChooser()
 
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
         // Generates array of unique index positions for one numArray
     public int[] pickRandomTilesIndex(int amount, int indexSize) {
@@ -460,10 +416,7 @@ public class MainActivity extends AppCompatActivity {
 
     }   // End of pickRandomTilesIndex()
 
-
-
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         // Devises a target answer from global origArr, and stores the workings for global equationLog
     public void generateTarget(){
@@ -714,13 +667,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-
-
-
             } // (while 1) end. Made sum(s) and calc(s), have we finished though and got a potential answer?
-
-
-
 
 
 
@@ -728,8 +675,7 @@ public class MainActivity extends AppCompatActivity {
 
     }   // End of monster generateTarget() method
 
-
-        // operatorGenerator method start
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public int[] operatorGenerator(int a, int b, int operator){
         int result, successOrFail =1;   // 0 is fail, 1 is pass
@@ -757,7 +703,7 @@ public class MainActivity extends AppCompatActivity {
 
     } // end of operatorGenorator() method
 
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         // Make all mystery tiles 50% transparent, the gameScreen GONE, the pickerScreen VISIBLE, and reset tile counts to 0
     public void refreshPicker(View view){
@@ -794,9 +740,220 @@ public class MainActivity extends AppCompatActivity {
         }
     } // end of refreshPicker
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void tileClicked(View view){
+
+        if (gameActive && posInCalc != 1) {
+
+            ViewGroup parentVG;
+            ViewGroup parentVGVG;
+
+            parentVG = (ViewGroup)view.getParent();
+            parentVGVG = (ViewGroup)parentVG.getParent();
+            int row = 1;
+            int column = 0;
+
+                // Get row.
+            if ( parentVGVG == (ViewGroup)findViewById(R.id.origTileCont) ){
+                row = 0;
+            }
+
+                // Get column.
+            for (int i=0; i<parentVG.getChildCount(); i++){
+                if (view == parentVG.getChildAt(i)){
+                    column = i;
+                    break;
+                }
+            }
+            // We now have the row and column of the tiles clicked.
+
+                // Get TextView contents
+            ViewGroup textContainer = (ViewGroup)parentVG.getChildAt(1);
+            TextView textView = (TextView)textContainer.getChildAt(column);
+            String tileString = (String)textView.getText();
+            int tileInt = Integer.parseInt(tileString);
+
+            boolean firstNum = (posInCalc == 0);
+
+
+            // need to have a function that passes full line of calc if we're on secondNum, and returns
+
+            if (firstNum) {
+                // Add to history
+                // Grey out tile
+            } else {
+                int[] operatorReturn = operatorGenerator(historyAL.get(historyAL.size()-1).get(3), tileInt, historyAL.get(historyAL.size()-1).get(4));
+                    // Check for valid sum
+                boolean validSum = (operatorReturn[0] == 1);
+                if (!validSum){
+                    Toast.makeText(getApplicationContext(), "Invalid sum!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Yep.", Toast.LENGTH_LONG).show();
+                }
+            }
 
 
 
+            // void refreshWhiteBoard();
+
+                // Pass these to if statements
+            boolean fullLines = (historyAL.size() > 1);
+            boolean currentLineEmpty = historyAL.get(historyAL.size()-1).size() == 0;
+
+                // Make sure we have at least a full line, to prevent indexOutOfBounds
+            if (fullLines){
+                    // Check to see if we have a winning answer at the end
+                if (currentLineEmpty){
+                            // Latest sum equals target, game is won
+                    if ( historyAL.get(historyAL.size()-2).get(7) == equationLog.get(equationLog.size()-1).get(3) ){
+                        Toast.makeText(getApplicationContext(), "Well done!", Toast.LENGTH_LONG).show();
+                    }
+                }
+            } // end of game won checker
+
+
+
+
+
+
+        } // end of if gameActive
+
+    } // end of tileClicked
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void operatorClicked(View view){
+
+        if (gameActive){
+
+            ViewGroup operatorVG = (ViewGroup)findViewById(R.id.operatorLinear);
+            int operator = 0;
+            String operatorString;
+
+            for (int i=0; i<operatorVG.getChildCount(); i++){
+                if (view == operatorVG.getChildAt(i)){
+                    operator = i;
+                }
+            }
+
+                // Clear is operator 2
+            if (operator == 2) {
+                clear();
+                return;
+            } else {
+                if (posInCalc == 1){
+                    if (operator > 2) {
+                        // Because we've messed up with clear button (01 2 34) is (+- c */)
+                        operator--;
+                    }
+                    historyAL.get(historyAL.size()-1).add(operator);
+                    posInCalc++;
+                } else {
+                        // Not ready for operator
+                    Toast.makeText(getApplicationContext(), "Tap a number tile...", Toast.LENGTH_LONG).show();
+                } // end of posInCalc
+
+            } // end of for loop
+
+
+
+
+
+
+
+
+
+        } // end of if gameActive
+
+    } // end of operatorClicked
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public String userOpToString(int operator) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" ");
+
+        switch(operator) {
+            case 0:
+                stringBuilder.append("+");
+                break;
+            case 1:
+                stringBuilder.append("-");
+                break;
+            case 3:
+                stringBuilder.append("x");
+                break;
+            case 4:
+                stringBuilder.append("/");
+                break;
+        }
+        stringBuilder.append(" ");
+
+        return stringBuilder.toString();
+    } // end of userOpToString
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        // clears the current/previous user calculation
+    public void clear(){
+        int currentLine = historyAL.size()-1;
+
+            // Not on 0th row -or- there is something to delete on current row
+        if (currentLine > 0 || historyAL.get(currentLine).size() > 0){
+
+                // Blank line with equation above, so remove current empty row
+            if (historyAL.get(currentLine).size() == 0){
+                historyAL.remove(historyAL.size()-1);
+                currentLine--;
+            }
+
+                // undo what is on current line
+            int arraySize = (int)historyAL.get(currentLine).size();
+            Integer[] arrayBuffer = historyAL.get(currentLine).toArray(new Integer[arraySize]);
+            undo(arrayBuffer);
+            historyAL.get(currentLine).clear();
+        }
+
+        posInCalc = 0;
+
+    } // end of clear
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        // Takes array of instructions from a line of history and implements those changes in tiles
+    public void undo (Integer[] instructions){
+        //       [ 0   1   2  3   4   5   6 ]
+        // given [row col val op row col val] ... or a smaller array
+
+        TileControl tileControl = new TileControl();
+        int[] passToSwitch = {instructions[0], instructions[1], instructions[2]};
+        boolean flag = false;
+
+
+        for (int i=0; i<2; i++){
+
+            if (passToSwitch[0] == 0) {
+                tileControl.setBG(passToSwitch[1], "blue");
+            }
+            tileControl.setText(passToSwitch[0], passToSwitch[1], passToSwitch[2]);
+
+            if (i==0 && instructions.length > 4){
+                passToSwitch[0] = instructions[4];
+                passToSwitch[1] = instructions[5];
+                passToSwitch[2] = instructions[6];
+            } else {
+                i++;
+            }
+        } // end of for loop
+
+    } // end of undo
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -515,7 +515,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sumtilecont"
+            app:layout_constraintTop_toBottomOf="@+id/sumTileCont"
             app:layout_constraintVertical_bias="0.13999999">
 
             <LinearLayout
@@ -533,7 +533,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
-                    android:onClick="stopClock"
+                    android:onClick="operatorClicked"
                     app:srcCompat="@drawable/add" />
 
                 <ImageView
@@ -541,6 +541,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="operatorClicked"
                     app:srcCompat="@drawable/sub" />
 
                 <ImageView
@@ -549,7 +550,7 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="12dp"
                     android:layout_weight="4"
-                    android:onClick="renew"
+                    android:onClick="operatorClicked"
                     app:srcCompat="@drawable/clear" />
 
                 <ImageView
@@ -557,7 +558,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
-                    android:onClick="startTimer"
+                    android:onClick="operatorClicked"
                     app:srcCompat="@drawable/mult" />
 
                 <ImageView
@@ -565,7 +566,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
-                    android:onClick="showEquation"
+                    android:onClick="operatorClicked"
                     app:srcCompat="@drawable/div" />
             </LinearLayout>
 
@@ -614,7 +615,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/smallTileCont"
+            android:id="@+id/origTileCont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -638,6 +639,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/orig" />
 
                 <ImageView
@@ -645,6 +647,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/orig" />
 
                 <ImageView
@@ -652,6 +655,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/orig" />
 
                 <ImageView
@@ -659,6 +663,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/origgrey" />
 
                 <ImageView
@@ -666,6 +671,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/orig" />
 
                 <ImageView
@@ -673,6 +679,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/origgrey" />
 
             </LinearLayout>
@@ -761,7 +768,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/sumtilecont"
+            android:id="@+id/sumTileCont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -770,14 +777,14 @@
             app:layout_constraintEnd_toStartOf="@+id/operatorCont"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/operatorCont"
-            app:layout_constraintTop_toBottomOf="@+id/smallTileCont">
+            app:layout_constraintTop_toBottomOf="@+id/origTileCont">
 
             <LinearLayout
                 android:id="@+id/sumTileLinear"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginStart="42dp"
+                android:layout_marginEnd="42dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -787,6 +794,7 @@
                     android:layout_width="88dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/combined" />
 
                 <ImageView
@@ -794,6 +802,7 @@
                     android:layout_width="88dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/combined" />
 
                 <ImageView
@@ -801,6 +810,7 @@
                     android:layout_width="88dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/combined" />
 
             </LinearLayout>
@@ -809,8 +819,8 @@
                 android:id="@+id/sumTextLinear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginStart="42dp"
+                android:layout_marginEnd="42dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
