@@ -746,6 +746,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (gameActive && posInCalc != 1) {
 
+            Log.i("Info", "tileClicked 01");
+
             ViewGroup parentVG;
             ViewGroup parentVGVG;
 
@@ -757,25 +759,39 @@ public class MainActivity extends AppCompatActivity {
                 // Get row.
             if ( parentVGVG == (ViewGroup)findViewById(R.id.origTileCont) ){
                 row = 0;
+                Log.i("Info", "tileClicked we clicked an origTileCont");
             }
+
+            Log.i("Info", "tileClicked 02");
 
                 // Get column.
             for (int i=0; i<parentVG.getChildCount(); i++){
+                Log.i("Info", "tileClicked looping...");
                 if (view == parentVG.getChildAt(i)){
+                    Log.i("Info", "tileClicked found child.");
                     column = i;
+                    Log.i("Info", "tileClicked child(i) is: " + i);
                     break;
                 }
             }
             // We now have the row and column of the tiles clicked.
 
+            Log.i("Info", "tileClicked getting textViews");
+            Log.i("Info", "tileClicked ");
+
                 // Get TextView contents
-            ViewGroup textContainer = (ViewGroup)parentVG.getChildAt(1);
-            TextView textView = (TextView)textContainer.getChildAt(column);
+            ViewGroup origTextLinear = (ViewGroup)parentVGVG.getChildAt(1);
+            Log.i("Info", "tileClicked getting textView...");
+            TextView textView = (TextView)origTextLinear.getChildAt(column);
+            Log.i("Info", "tileClicked getting text...");
             String tileString = (String)textView.getText();
+            Log.i("Info", "tileClicked converting text in view to int variable tileInt...");
             int tileInt = Integer.parseInt(tileString);
 
             boolean firstNum = (posInCalc == 0);
 
+
+            Log.i("Info", "tileClicked 03");
 
             // need to have a function that passes full line of calc if we're on secondNum, and returns
 
@@ -793,7 +809,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-
+            Log.i("Info", "tileClicked 04");
 
             // void refreshWhiteBoard();
 
@@ -827,6 +843,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (gameActive){
 
+            Log.i("Info", "operatorClicked 01");
+
             ViewGroup operatorVG = (ViewGroup)findViewById(R.id.operatorLinear);
             int operator = 0;
             String operatorString;
@@ -837,13 +855,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            Log.i("Info", "operatorClicked 02");
+
                 // Clear is operator 2
             if (operator == 2) {
                 clear();
                 return;
             } else {
                 if (posInCalc == 1){
+                    Log.i("Info", "operatorClicked 03");
                     if (operator > 2) {
+                        Log.i("Info", "operatorClicked 04");
                         // Because we've messed up with clear button (01 2 34) is (+- c */)
                         operator--;
                     }
@@ -859,7 +881,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+            Log.i("Info", "operatorClicked 05");
 
 
 
