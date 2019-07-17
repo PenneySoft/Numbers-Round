@@ -2,6 +2,7 @@ package com.Dev13B.NumbersRound;
 
 import android.animation.ObjectAnimator;
 import android.media.Image;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -781,8 +782,10 @@ public class MainActivity extends AppCompatActivity {
 
                 // Get TextView contents
             ViewGroup origTextLinear = (ViewGroup)parentVGVG.getChildAt(1);
+            ViewGroup origTileLinear = (ViewGroup)parentVGVG.getChildAt(0);
             Log.i("Info", "tileClicked getting textView...");
             TextView textView = (TextView)origTextLinear.getChildAt(column);
+            ImageView imageView = (ImageView)origTileLinear.getChildAt(column);
             Log.i("Info", "tileClicked getting text...");
             String tileString = (String)textView.getText();
             Log.i("Info", "tileClicked converting text in view to int variable tileInt...");
@@ -790,28 +793,35 @@ public class MainActivity extends AppCompatActivity {
 
             boolean firstNum = (posInCalc == 0);
 
-
             Log.i("Info", "tileClicked 03");
 
             // need to have a function that passes full line of calc if we're on secondNum, and returns
 
+            TileControl tileControl = new TileControl();
+
             if (firstNum) {
-                // Add to history
-                // Grey out tile
+                historyAL.get(historyAL.size()-1).add(row);
+                historyAL.get(historyAL.size()-1).add(column);
+                historyAL.get(historyAL.size()-1).add(tileInt);
+                tileControl.setBG(column, "grey");
+                posInCalc++;
             } else {
-                int[] operatorReturn = operatorGenerator(historyAL.get(historyAL.size()-1).get(3), tileInt, historyAL.get(historyAL.size()-1).get(4));
+                int[] operatorReturn = operatorGenerator(historyAL.get(historyAL.size()-1).get(2), tileInt, historyAL.get(historyAL.size()-1).get(3));
                     // Check for valid sum
                 boolean validSum = (operatorReturn[0] == 1);
                 if (!validSum){
                     Toast.makeText(getApplicationContext(), "Invalid sum!", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Yep.", Toast.LENGTH_LONG).show();
+                    historyAL.get(historyAL.size()-1).add(tileInt);
+                    tileControl.setBG(column, "grey");
+                    historyAL.get(historyAL.size()-1).add(operatorReturn[1]);
                 }
             }
 
             Log.i("Info", "tileClicked 04");
 
-            // void refreshWhiteBoard();
+            refreshWhiteBoard();
 
                 // Pass these to if statements
             boolean fullLines = (historyAL.size() > 1);
@@ -892,6 +902,40 @@ public class MainActivity extends AppCompatActivity {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    public void refreshWhiteBoard(){
+        TextView boardTV = (TextView)findViewById(R.id.boardTV);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // Loop through history lines to build string lines: for i { for j{{} }
+        // Use a public String userOpToString(int operator); to convert operator int to string " + "
+        // Need to insert new line \n after each full line, but not on empty new line with null?
+        //      if (i != 0) append("\n")
+
+        for (int i=0; i<historyAL.size(); i++){
+
+            if (i != 0){
+                // print new line
+                stringBuilder.append("\n");
+            }
+
+            for (int j=0; j<historyAL.get(i).size(); j++){
+
+                switch (j){
+                    case 2: stringBuilder.append(historyAL.get(i).get(j).toString()); break;
+                    case 3: stringBuilder.append(userOpToString(historyAL.get(i).get(j))); break;
+                    case 6: stringBuilder.append(historyAL.get(i).get(j).toString()); break;
+                    case 7: stringBuilder.append(" = "); stringBuilder.append(historyAL.get(i).get(j).toString()); break;
+                } // end of switch
+            } // end of for J
+        } // end of for i
+
+        boardTV.setText(stringBuilder.toString());
+
+    }
+
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     public String userOpToString(int operator) {
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -946,8 +990,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Takes array of instructions from a line of history and implements those changes in tiles
     public void undo (Integer[] instructions){
-        //       [ 0   1   2  3   4   5   6 ]
-        // given [row col val op row col val] ... or a smaller array
+        //       [ 0   1   2  3   4   5   6   7 ]
+        // given [row col val op row col val sum] ... or a smaller array
 
         TileControl tileControl = new TileControl();
         int[] passToSwitch = {instructions[0], instructions[1], instructions[2]};
