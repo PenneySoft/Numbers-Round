@@ -816,6 +816,8 @@ public class MainActivity extends AppCompatActivity {
                     historyAL.get(historyAL.size()-1).add(tileInt);
                     tileControl.setBG(column, "grey");
                     historyAL.get(historyAL.size()-1).add(operatorReturn[1]);
+                    posInCalc = 0;
+                    historyAL.add(new ArrayList<Integer>());
                 }
             }
 
@@ -889,9 +891,11 @@ public class MainActivity extends AppCompatActivity {
             } // end of for loop
 
 
+            Log.i("Info", "operatorClicked refreshing whiteboard...");
 
+            refreshWhiteBoard();
 
-            Log.i("Info", "operatorClicked 05");
+            Log.i("Info", "operatorClicked whiteboard refreshed.");
 
 
 
