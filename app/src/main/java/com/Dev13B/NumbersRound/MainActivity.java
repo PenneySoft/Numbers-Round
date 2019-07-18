@@ -179,13 +179,53 @@ public class MainActivity extends AppCompatActivity {
 
     } // End of tileControl Class
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    public void menuButton (View view){
+        ViewGroup menuScreen = (ViewGroup)findViewById(R.id.menuOpened);
+
+        if (menuScreen.getVisibility() == View.GONE) {
+            menuScreen.setVisibility(View.VISIBLE);
+        } else {
+            menuScreen.setVisibility(View.GONE);
+        }
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void menuResetNumbers (View view){
+
+        ImageView clockHandIV = (ImageView)findViewById(R.id.clockhandIV);
+        clockHandIV.setVisibility(View.GONE);
+
+        startGameScreenVoid();
+        ViewGroup menu = (ViewGroup)findViewById(R.id.menuOpened);
+        menu.setVisibility(View.GONE);
+
+
+        clockHandIV.setVisibility(View.GONE);
+
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void menuNewTiles (View view){
+
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void menuShowSolution (View view){
+        gameActive = false;
+        showEquation();
+
+    }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-        // Equation operator String generator
 
+        // Equation operator String generator
     public class EqOp {
             // make an oeprator int, turned into a character + - x /
         public String toString(int x){
@@ -261,14 +301,14 @@ public class MainActivity extends AppCompatActivity {
 
         totalNum = smallNum + bigNum;
         if (totalNum >= maxNum){
-            startGameScreen(view);
+            startGameScreenVoid();
         }
 
     } // end of randomTileClicked
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public void showEquation(View view){
+    public void showEquation(){
         EqOp eqOp = new EqOp();
         TextView boardTV = (TextView)findViewById(R.id.boardTV);
         int[] equationBuffer;
@@ -300,13 +340,27 @@ public class MainActivity extends AppCompatActivity {
 
         boardTV.setText(stringBuffer.toString());
 
+
+        ViewGroup menu = (ViewGroup)findViewById(R.id.menuOpened);
+        menu.setVisibility(View.GONE);
+
     } // end of showEquation method
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public void startGameScreen(View view){
+    public void startGameScreenVoid(){
 
+        TextView menuTV = (TextView)findViewById(R.id.menuTV);
+        menuTV.setVisibility(View.GONE);
         sumAL.clear();
+
+        TextView startButton = (TextView)findViewById(R.id.startButton);
+        startButton.setVisibility(View.VISIBLE);
+
+
+
+        TextView boardTV = (TextView)findViewById(R.id.boardTV);
+        boardTV.setText("");
 
             // Hide choosing screen.
         ViewGroup pickerScreen = (ViewGroup)findViewById(R.id.pickerScreen);
@@ -340,6 +394,9 @@ public class MainActivity extends AppCompatActivity {
             // method to fill the origArray tiles and makes them blue
         generateTarget();
 
+        ImageView clockHandIV = (ImageView)findViewById(R.id.clockhandIV);
+        clockHandIV.setVisibility(View.GONE);
+
 
     } // end of start game screen
 
@@ -358,6 +415,9 @@ public class MainActivity extends AppCompatActivity {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public void startTimer(View view){
+
+        TextView menu = (TextView)findViewById(R.id.menuTV);
+        menu.setVisibility(View.VISIBLE);
 
         gameActive = true;
         posInCalc = 0;
