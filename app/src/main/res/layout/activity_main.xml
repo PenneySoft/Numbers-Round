@@ -494,7 +494,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/coolveticaa"
-                android:text="999"
+                android:text="---"
                 android:textColor="@android:color/white"
                 android:textSize="55sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -503,6 +503,70 @@
                 app:layout_constraintStart_toEndOf="@+id/targetIV"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.26" />
+
+            <TextView
+                android:id="@+id/menuTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#72404159"
+                android:fontFamily="@font/coolveticaa"
+                android:onClick="menu"
+                android:paddingLeft="8dp"
+                android:paddingTop="2dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="Menu"
+                android:textColor="#E6E6E6"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/targetIV"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/boardCont"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/targetCont">
+
+            <ImageView
+                android:id="@+id/boardIV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/whiteboard" />
+
+            <TextView
+                android:id="@+id/boardTV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/annie_use_your_telescope"
+                android:lineSpacingMultiplier="0.7"
+                android:textColor="#B2000000"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/boardIV"
+                app:layout_constraintEnd_toStartOf="@+id/boardIV"
+                app:layout_constraintStart_toStartOf="@+id/boardIV"
+                app:layout_constraintTop_toTopOf="@+id/boardIV"
+                app:layout_constraintVertical_bias="0.49" />
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -573,45 +637,23 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/boardCont"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_marginStart="8dp"
+            android:id="@+id/menuOpened"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/targetCont">
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:background="#66838282"
+            app:layout_constraintBottom_toBottomOf="@+id/boardCont"
+            app:layout_constraintEnd_toEndOf="@id/boardCont"
+            app:layout_constraintLeft_toLeftOf="@id/boardCont"
+            app:layout_constraintRight_toRightOf="@id/boardCont"
 
-            <ImageView
-                android:id="@+id/boardIV"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/whiteboard" />
 
-            <TextView
-                android:id="@+id/boardTV"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/annie_use_your_telescope"
-                android:lineSpacingMultiplier="0.7"
-                android:text="100 + 50 \n10 + 2"
-                android:textColor="#B2000000"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/boardIV"
-                app:layout_constraintEnd_toStartOf="@+id/boardIV"
-                app:layout_constraintStart_toStartOf="@+id/boardIV"
-                app:layout_constraintTop_toTopOf="@+id/boardIV"
-                app:layout_constraintVertical_bias="0.49" />
+            app:layout_constraintStart_toStartOf="@id/boardCont"
+            app:layout_constraintTop_toTopOf="@id/boardCont">
+
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -834,7 +876,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/coolveticaa"
                     android:gravity="center"
-                    android:text="546"
                     android:textColor="@android:color/white"
                     android:textSize="30dp"
                     android:textStyle="bold" />
@@ -848,7 +889,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/coolveticaa"
                     android:gravity="center"
-                    android:text="654"
                     android:textColor="@android:color/white"
                     android:textSize="30dp"
                     android:textStyle="bold" />
