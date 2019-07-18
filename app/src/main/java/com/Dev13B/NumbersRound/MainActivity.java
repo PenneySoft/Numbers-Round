@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Array that stores numbers to go on the orig tiles
     int[] origArr = new int[6];
+    ArrayList<Integer> sumAL = new ArrayList<Integer>();
 
         // ArrayList that logs all the equation lines
     ArrayList<ArrayList<Integer>> equationLog; // might need to be defined as null, maybe not though
@@ -98,7 +99,29 @@ public class MainActivity extends AppCompatActivity {
             allBlue();
         } // end of resetClickable
 
+        public void bottomFill(){
 
+            ViewGroup sumTVParent = (ViewGroup)findViewById(R.id.sumTextLinear);
+            TextView sumTV;
+
+                // Clear bottom row
+            for (int i=0; i<sumTVParent.getChildCount(); i++){
+                sumTV = (TextView)sumTVParent.getChildAt(i);
+                sumTV.setText("");
+                setClickable(1, i, 0);
+            } // end of for
+
+                // Fill bottom row with sumAL contents
+            for (int i=0; i<sumAL.size(); i++){
+                sumTV = (TextView)sumTVParent.getChildAt(i);
+                sumTV.setText(sumAL.get(i).toString());
+                setClickable(1, i, 1);
+            } // end of for
+
+
+
+
+        } //end of bottomFill
 
             // Sets tileBG (0, 5, "blue")
         public void setBG(int column, String colour){
@@ -282,6 +305,8 @@ public class MainActivity extends AppCompatActivity {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public void startGameScreen(View view){
+
+        sumAL.clear();
 
             // Hide choosing screen.
         ViewGroup pickerScreen = (ViewGroup)findViewById(R.id.pickerScreen);
@@ -783,9 +808,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void tileClicked(View view){
 
-
-
-
         if (gameActive && posInCalc != 1) {
 
             Log.i("Info", "tileClicked 01");
@@ -852,8 +874,16 @@ public class MainActivity extends AppCompatActivity {
                 historyAL.get(historyAL.size()-1).add(row);
                 historyAL.get(historyAL.size()-1).add(column);
                 historyAL.get(historyAL.size()-1).add(tileInt);
-                tileControl.setBG(column, "grey");
+
+                if (row == 0) {
+                    tileControl.setBG(column, "grey");
+                }
                 posInCalc++;
+
+                if (row==1){
+                    sumAL.remove(column);
+                }
+
             } else {
                 int[] operatorReturn = operatorGenerator(historyAL.get(historyAL.size()-1).get(2), tileInt, historyAL.get(historyAL.size()-1).get(3));
                     // Check for valid sum
@@ -870,8 +900,23 @@ public class MainActivity extends AppCompatActivity {
                     historyAL.get(historyAL.size()-1).add(operatorReturn[1]);
                     posInCalc = 0;
                     historyAL.add(new ArrayList<Integer>());
+
+                    if (row==1){
+                        sumAL.remove(column);
+                    }
+
+                    sumAL.add(operatorReturn[1]);
+
                 }
             }
+
+            // Now to add sum to bottom row tiles text
+            // Also set the amount of tiles clickable along the bottom row
+            // But first we need to remove any sum tiles we've used in the calculation
+
+
+
+
 
             Log.i("Info", "tileClicked 04");
 
@@ -894,12 +939,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             } // end of game won checker
 
-                // Now to add sum to bottom row tiles text
-                // Also set the amount of tiles clickable along the bottom row
-                // But first we need to remove any sum tiles we've used in the calculation
 
 
-
+            tileControl.bottomFill();
 
 
         } // end of if gameActive
@@ -959,7 +1001,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Info", "operatorClicked whiteboard refreshed.");
 
 
-
+            tileControl.bottomFill();
 
         } // end of if gameActive
 
@@ -1042,7 +1084,12 @@ public class MainActivity extends AppCompatActivity {
 
         // clears the current/previous user calculation
     public void clear(){
+
+        Log.i("Info", "Clear 01. ");
+
         int currentLine = historyAL.size()-1;
+
+        Log.i("Info", Arrays.toString(historyAL.get(currentLine).toArray()));
 
             // Not on 0th row -or- there is something to delete on current row
         if (currentLine > 0 || historyAL.get(currentLine).size() > 0){
@@ -1064,6 +1111,13 @@ public class MainActivity extends AppCompatActivity {
 
         refreshWhiteBoard();
 
+        tileControl.bottomFill();
+
+        Log.i("Info", "Clear 02. ");
+        Log.i("Info", Arrays.toString(sumAL.toArray()));
+
+
+
     } // end of clear
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1077,16 +1131,34 @@ public class MainActivity extends AppCompatActivity {
        // int[] passToSwitch = {instructions[0], instructions[1], instructions[2]};
         boolean flag = false;
 
+            // we are undoing a whole line, deal with sumAL tiles by deleting end sum
+        if (instructions.length > 5){
+            sumAL.remove(sumAL.size()-1);
+        }
+
+
+
+
+
             // Makes tiles clickable again
-        for (int i=0; i<instructions.length; i++){
+        for (int i=instructions.length-1; i>=0; i--){
             switch (i){
                 case 0:
                     tileControl.setClickable(instructions[i], instructions[i+1], 1);
                     tileControl.setText(instructions[i], instructions[i+1], instructions[i+2]);
+                        // Add our sum value back into the tile container, where it was taken from
+                    if(instructions[i]==1) {
+                        sumAL.add(instructions[i+1], instructions[i+2]);
+                    }
                     break;
                 case 4:
                     tileControl.setClickable(instructions[i], instructions[i+1], 1);
                     tileControl.setText(instructions[i], instructions[i+1], instructions[i+2]);
+                    // Remove latest sum, then add our sum value back into the tile container, where it was taken from.
+                    if(instructions[i]==1) {
+                        // sumAL.remove(sumAL.size()-1);
+                        sumAL.add(instructions[i+1], instructions[i+2]);
+                    }
                     break;
             } // end of switch
 
@@ -1097,7 +1169,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+
+
         } // end of for
+
+
+        tileControl.bottomFill();
 
     } // end of undo
 
