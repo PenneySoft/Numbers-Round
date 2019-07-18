@@ -19,6 +19,7 @@ import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -27,7 +28,7 @@ import java.lang.Math;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    TileControl tileControl = new TileControl();
 
         // Global variables
     // -------------------------------------------------
@@ -61,6 +62,43 @@ public class MainActivity extends AppCompatActivity {
 
         // Use this to get and set tile data
     public class TileControl {
+
+        private int[] origClickable = {1, 1, 1, 1, 1, 1};
+        private int[] sumClickable = {0, 0, 0};
+
+        public boolean isClickable(int row, int col){
+            if (row == 0) {
+                if (origClickable[col] == 1) {
+                    return true;
+                }
+            } else {
+                if (sumClickable[col]==1){
+                    return true;
+                }
+            }
+            return false;
+        } // end of isClickable
+
+        public void setClickable(int row, int col, int set){
+            if (row == 0) {
+                origClickable[col] = set;
+            } else {
+                sumClickable[col] = set;
+            }
+        } // end of setClickable
+
+
+        public void resetClickable(){
+            for (int i=0; i<origClickable.length; i++){
+                origClickable[i] = 1;
+            }
+            for (int i=0; i<sumClickable.length; i++){
+                sumClickable[i] = 0;
+            }
+            allBlue();
+        } // end of resetClickable
+
+
 
             // Sets tileBG (0, 5, "blue")
         public void setBG(int column, String colour){
@@ -342,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
     public void numberChooser(int big, int small){
 
         indexesForAllTiles = new ArrayList<Integer>();
-        TileControl tileControl = new TileControl();
+        // TileControl tileControl = new TileControl();
 
             // Pick indexes for the big tiles. Send it: [amount of numbers needed] [size of list to choose indexes from]
         int[] indexesForBigTiles = pickRandomTilesIndex(bigNum, bigNumsArray.length);
@@ -366,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
         }
             // origArr is now filled with our 6 numbers/values
 
-        tileControl.allBlue();
+        tileControl.resetClickable();
 
             // Fill tiles with values
         for (int i=0; i<6; i++){
@@ -745,6 +783,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void tileClicked(View view){
 
+
+
+
         if (gameActive && posInCalc != 1) {
 
             Log.i("Info", "tileClicked 01");
@@ -777,6 +818,10 @@ public class MainActivity extends AppCompatActivity {
             }
             // We now have the row and column of the tiles clicked.
 
+            if (!tileControl.isClickable(row, column)){
+                return;
+            }
+
             Log.i("Info", "tileClicked getting textViews");
             Log.i("Info", "tileClicked ");
 
@@ -791,13 +836,17 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Info", "tileClicked converting text in view to int variable tileInt...");
             int tileInt = Integer.parseInt(tileString);
 
+
+
             boolean firstNum = (posInCalc == 0);
 
             Log.i("Info", "tileClicked 03");
 
             // need to have a function that passes full line of calc if we're on secondNum, and returns
 
-            TileControl tileControl = new TileControl();
+            // TileControl tileControl = new TileControl();
+
+
 
             if (firstNum) {
                 historyAL.get(historyAL.size()-1).add(row);
@@ -811,8 +860,11 @@ public class MainActivity extends AppCompatActivity {
                 boolean validSum = (operatorReturn[0] == 1);
                 if (!validSum){
                     Toast.makeText(getApplicationContext(), "Invalid sum!", Toast.LENGTH_LONG).show();
+                    return;
                 } else {
                     Toast.makeText(getApplicationContext(), "Yep.", Toast.LENGTH_LONG).show();
+                    historyAL.get(historyAL.size()-1).add(row);
+                    historyAL.get(historyAL.size()-1).add(column);
                     historyAL.get(historyAL.size()-1).add(tileInt);
                     tileControl.setBG(column, "grey");
                     historyAL.get(historyAL.size()-1).add(operatorReturn[1]);
@@ -822,6 +874,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             Log.i("Info", "tileClicked 04");
+
+            tileControl.setClickable(row, column, 0);
 
             refreshWhiteBoard();
 
@@ -840,6 +894,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             } // end of game won checker
 
+                // Now to add sum to bottom row tiles text
+                // Also set the amount of tiles clickable along the bottom row
+                // But first we need to remove any sum tiles we've used in the calculation
 
 
 
@@ -852,6 +909,10 @@ public class MainActivity extends AppCompatActivity {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public void operatorClicked(View view){
+
+
+
+
 
         if (gameActive){
 
@@ -915,15 +976,20 @@ public class MainActivity extends AppCompatActivity {
         // Need to insert new line \n after each full line, but not on empty new line with null?
         //      if (i != 0) append("\n")
 
+        Log.i("Info", "Whiteboard started.");
+
         for (int i=0; i<historyAL.size(); i++){
+
+            Log.i("Info", "Whiteboard loop iteration started for i = " + i);
 
             if (i != 0){
                 // print new line
+                Log.i("Info", "Whiteboard new line added.");
                 stringBuilder.append("\n");
             }
 
             for (int j=0; j<historyAL.get(i).size(); j++){
-
+                Log.i("Info", "Whiteboard loop iteration started for j = " + j);
                 switch (j){
                     case 2: stringBuilder.append(historyAL.get(i).get(j).toString()); break;
                     case 3: stringBuilder.append(userOpToString(historyAL.get(i).get(j))); break;
@@ -932,6 +998,14 @@ public class MainActivity extends AppCompatActivity {
                 } // end of switch
             } // end of for J
         } // end of for i
+
+        Log.i("Info", "Whiteboard loop i and j finished, setting board text...");
+
+        Log.i("Info", "historyAL(0) is: ");
+        Log.i("Info", Arrays.toString(historyAL.get(0).toArray()));
+
+        Log.i("Info", "stringBuilder is: ");
+        Log.i("Info",  stringBuilder.toString());
 
         boardTV.setText(stringBuilder.toString());
 
@@ -952,10 +1026,10 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 stringBuilder.append("-");
                 break;
-            case 3:
+            case 2:
                 stringBuilder.append("x");
                 break;
-            case 4:
+            case 3:
                 stringBuilder.append("/");
                 break;
         }
@@ -988,6 +1062,8 @@ public class MainActivity extends AppCompatActivity {
 
         posInCalc = 0;
 
+        refreshWhiteBoard();
+
     } // end of clear
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -997,26 +1073,31 @@ public class MainActivity extends AppCompatActivity {
         //       [ 0   1   2  3   4   5   6   7 ]
         // given [row col val op row col val sum] ... or a smaller array
 
-        TileControl tileControl = new TileControl();
-        int[] passToSwitch = {instructions[0], instructions[1], instructions[2]};
+        // TileControl tileControl = new TileControl();
+       // int[] passToSwitch = {instructions[0], instructions[1], instructions[2]};
         boolean flag = false;
 
+            // Makes tiles clickable again
+        for (int i=0; i<instructions.length; i++){
+            switch (i){
+                case 0:
+                    tileControl.setClickable(instructions[i], instructions[i+1], 1);
+                    tileControl.setText(instructions[i], instructions[i+1], instructions[i+2]);
+                    break;
+                case 4:
+                    tileControl.setClickable(instructions[i], instructions[i+1], 1);
+                    tileControl.setText(instructions[i], instructions[i+1], instructions[i+2]);
+                    break;
+            } // end of switch
 
-        for (int i=0; i<2; i++){
-
-            if (passToSwitch[0] == 0) {
-                tileControl.setBG(passToSwitch[1], "blue");
+                // Set tile to blue if top row 0
+            if (i==0 || i==4){
+                if (instructions[i] == 0){
+                    tileControl.setBG(instructions[i+1], "blue");
+                }
             }
-            tileControl.setText(passToSwitch[0], passToSwitch[1], passToSwitch[2]);
 
-            if (i==0 && instructions.length > 4){
-                passToSwitch[0] = instructions[4];
-                passToSwitch[1] = instructions[5];
-                passToSwitch[2] = instructions[6];
-            } else {
-                i++;
-            }
-        } // end of for loop
+        } // end of for
 
     } // end of undo
 
