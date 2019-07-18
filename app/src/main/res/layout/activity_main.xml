@@ -27,7 +27,7 @@
         android:id="@+id/pickerScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/pickerTitleShadow"
@@ -428,7 +428,7 @@
         android:id="@+id/gameScreen"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -494,7 +494,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/coolveticaa"
-                android:text="999"
+                android:text="---"
                 android:textColor="@android:color/white"
                 android:textSize="55sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -503,70 +503,27 @@
                 app:layout_constraintStart_toEndOf="@+id/targetIV"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.26" />
-        </android.support.constraint.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/operatorCont"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sumtilecont"
-            app:layout_constraintVertical_bias="0.13999999">
-
-            <LinearLayout
-                android:id="@+id/operatorLinear"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/menuTV"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:background="#72404159"
+                android:fontFamily="@font/coolveticaa"
+                android:onClick="menuButton"
+                android:paddingLeft="8dp"
+                android:paddingTop="2dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="Menu"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/op0"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/add" />
-
-                <ImageView
-                    android:id="@+id/op1"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/sub" />
-
-                <ImageView
-                    android:id="@+id/clear"
-                    android:layout_width="80dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_weight="4"
-                    android:onClick="renew"
-                    app:srcCompat="@drawable/clear" />
-
-                <ImageView
-                    android:id="@+id/op2"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:onClick="startTimer"
-                    app:srcCompat="@drawable/mult" />
-
-                <ImageView
-                    android:id="@+id/op3"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:onClick="showEquation"
-                    app:srcCompat="@drawable/div" />
-            </LinearLayout>
+                app:layout_constraintStart_toEndOf="@+id/targetIV"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -597,11 +554,12 @@
                 android:id="@+id/boardTV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="@font/annie_use_your_telescope"
                 android:lineSpacingMultiplier="0.7"
-                android:text="100 + 50 \n10 + 2"
                 android:textColor="#B2000000"
                 android:textSize="28sp"
                 android:textStyle="bold"
@@ -613,7 +571,160 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/smallTileCont"
+            android:id="@+id/operatorCont"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sumTileCont"
+            app:layout_constraintVertical_bias="0.13999999">
+
+            <LinearLayout
+                android:id="@+id/operatorLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/op0"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:onClick="operatorClicked"
+                    app:srcCompat="@drawable/add" />
+
+                <ImageView
+                    android:id="@+id/op1"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:onClick="operatorClicked"
+                    app:srcCompat="@drawable/sub" />
+
+                <ImageView
+                    android:id="@+id/clear"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_weight="4"
+                    android:onClick="operatorClicked"
+                    app:srcCompat="@drawable/clear" />
+
+                <ImageView
+                    android:id="@+id/op2"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:onClick="operatorClicked"
+                    app:srcCompat="@drawable/mult" />
+
+                <ImageView
+                    android:id="@+id/op3"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:onClick="operatorClicked"
+                    app:srcCompat="@drawable/div" />
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/menuOpened"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:background="#46000000"
+            android:onClick="menuButton"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/boardCont"
+            app:layout_constraintEnd_toEndOf="@id/boardCont"
+
+
+            app:layout_constraintLeft_toLeftOf="@id/boardCont"
+            app:layout_constraintRight_toRightOf="@id/boardCont"
+            app:layout_constraintStart_toStartOf="@id/boardCont"
+            app:layout_constraintTop_toTopOf="@id/boardCont">
+
+            <TextView
+                android:id="@+id/resetNumber"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#CD5E5E5E"
+                android:fontFamily="@font/coolveticaa"
+                android:gravity="center_horizontal"
+                android:onClick="menuResetNumbers"
+                android:padding="2dp"
+                android:shadowColor="#111111"
+                android:shadowDx="1.2"
+                android:shadowDy="1.2"
+                android:shadowRadius="1.2"
+                android:text="Reset numbers"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/pickNewTiles"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#CD5E5E5E"
+                android:fontFamily="@font/coolveticaa"
+                android:gravity="center_horizontal"
+                android:onClick="menuNewTiles"
+                android:padding="2dp"
+                android:shadowColor="#111111"
+                android:shadowDx="1.2"
+                android:shadowDy="1.2"
+                android:shadowRadius="1.2"
+                android:text="Pick new tiles"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/resetNumber"
+                app:layout_constraintTop_toBottomOf="@id/resetNumber" />
+
+            <TextView
+                android:id="@+id/showSolution"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#CD5E5E5E"
+                android:fontFamily="@font/coolveticaa"
+                android:gravity="center_horizontal"
+                android:onClick="menuShowSolution"
+                android:padding="2dp"
+                android:shadowColor="#111111"
+                android:shadowDx="1.2"
+                android:shadowDy="1.2"
+                android:shadowRadius="1.2"
+                android:text="Show solution!"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/pickNewTiles"
+                app:layout_constraintTop_toBottomOf="@+id/pickNewTiles" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/origTileCont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -637,6 +748,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/orig" />
 
                 <ImageView
@@ -644,6 +756,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/orig" />
 
                 <ImageView
@@ -651,6 +764,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/orig" />
 
                 <ImageView
@@ -658,6 +772,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/origgrey" />
 
                 <ImageView
@@ -665,6 +780,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/orig" />
 
                 <ImageView
@@ -672,6 +788,7 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/origgrey" />
 
             </LinearLayout>
@@ -760,7 +877,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/sumtilecont"
+            android:id="@+id/sumTileCont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -769,12 +886,14 @@
             app:layout_constraintEnd_toStartOf="@+id/operatorCont"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/operatorCont"
-            app:layout_constraintTop_toBottomOf="@+id/smallTileCont">
+            app:layout_constraintTop_toBottomOf="@+id/origTileCont">
 
             <LinearLayout
                 android:id="@+id/sumTileLinear"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="42dp"
+                android:layout_marginEnd="42dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -784,6 +903,7 @@
                     android:layout_width="88dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/combined" />
 
                 <ImageView
@@ -791,6 +911,7 @@
                     android:layout_width="88dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/combined" />
 
                 <ImageView
@@ -798,30 +919,30 @@
                     android:layout_width="88dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
+                    android:onClick="tileClicked"
                     app:srcCompat="@drawable/combined" />
 
-                <ImageView
-                    android:id="@+id/sum3"
-                    android:layout_width="88dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/combined" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/sumTextLinear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginStart="42dp"
+                android:layout_marginEnd="42dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
                     android:id="@+id/sumTV0"
                     android:layout_width="80dp"
                     android:layout_height="55dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/coolveticaa"
                     android:gravity="center"
-                    android:text="546"
                     android:textColor="@android:color/white"
                     android:textSize="30dp"
                     android:textStyle="bold" />
@@ -830,10 +951,11 @@
                     android:id="@+id/sumTV1"
                     android:layout_width="80dp"
                     android:layout_height="55dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/coolveticaa"
                     android:gravity="center"
-                    android:text="654"
                     android:textColor="@android:color/white"
                     android:textSize="30dp"
                     android:textStyle="bold" />
@@ -842,17 +964,8 @@
                     android:id="@+id/sumTV2"
                     android:layout_width="80dp"
                     android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/coolveticaa"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="30dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/sumTV3"
-                    android:layout_width="80dp"
-                    android:layout_height="55dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/coolveticaa"
                     android:gravity="center"

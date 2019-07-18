@@ -2,8 +2,10 @@ package com.Dev13B.NumbersRound;
 
 import android.animation.ObjectAnimator;
 import android.media.Image;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -17,11 +19,16 @@ import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
+
+import java.lang.Math;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    TileControl tileControl = new TileControl();
 
         // Global variables
     // -------------------------------------------------
@@ -39,16 +46,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Array that stores numbers to go on the orig tiles
     int[] origArr = new int[6];
+    ArrayList<Integer> sumAL = new ArrayList<Integer>();
 
         // ArrayList that logs all the equation lines
     ArrayList<ArrayList<Integer>> equationLog; // might need to be defined as null, maybe not though
 
-
     Random rand = new Random();
 
-
-
-
+    boolean gameActive;
+    int posInCalc;
+    ArrayList<ArrayList<Integer>> historyAL;
 
 
         // Custom methods
@@ -57,24 +64,70 @@ public class MainActivity extends AppCompatActivity {
         // Use this to get and set tile data
     public class TileControl {
 
+        private int[] origClickable = {1, 1, 1, 1, 1, 1};
+        private int[] sumClickable = {0, 0, 0};
+
+        public boolean isClickable(int row, int col){
+            if (row == 0) {
+                if (origClickable[col] == 1) {
+                    return true;
+                }
+            } else {
+                if (sumClickable[col]==1){
+                    return true;
+                }
+            }
+            return false;
+        } // end of isClickable
+
+        public void setClickable(int row, int col, int set){
+            if (row == 0) {
+                origClickable[col] = set;
+            } else {
+                sumClickable[col] = set;
+            }
+        } // end of setClickable
+
+
+        public void resetClickable(){
+            for (int i=0; i<origClickable.length; i++){
+                origClickable[i] = 1;
+            }
+            for (int i=0; i<sumClickable.length; i++){
+                sumClickable[i] = 0;
+            }
+            allBlue();
+        } // end of resetClickable
+
+        public void bottomFill(){
+
+            ViewGroup sumTVParent = (ViewGroup)findViewById(R.id.sumTextLinear);
+            TextView sumTV;
+
+                // Clear bottom row
+            for (int i=0; i<sumTVParent.getChildCount(); i++){
+                sumTV = (TextView)sumTVParent.getChildAt(i);
+                sumTV.setText("");
+                setClickable(1, i, 0);
+            } // end of for
+
+                // Fill bottom row with sumAL contents
+            for (int i=0; i<sumAL.size(); i++){
+                sumTV = (TextView)sumTVParent.getChildAt(i);
+                sumTV.setText(sumAL.get(i).toString());
+                setClickable(1, i, 1);
+            } // end of for
+
+
+
+
+        } //end of bottomFill
+
             // Sets tileBG (0, 5, "blue")
-        public void setBG(int row, int column, String colour){
+        public void setBG(int column, String colour){
 
-            ViewGroup parentVG = null;
-            ImageView childIV;
-
-
-            switch (row) {
-                case (0):
-                parentVG = (ViewGroup)findViewById(R.id.origTileLinear);
-                break;
-                case (1):
-                parentVG = (ViewGroup)findViewById(R.id.sumTileLinear);
-                break;
-                default:
-            } // End switch
-
-            childIV = (ImageView)parentVG.getChildAt(column);
+            ViewGroup parentVG = (ViewGroup)findViewById(R.id.origTileLinear);
+            ImageView childIV = (ImageView)parentVG.getChildAt(column);
 
             switch(colour) {
                 case "blue":
@@ -97,8 +150,6 @@ public class MainActivity extends AppCompatActivity {
             }
         } // end allBlue()
 
-
-
             // Set text of tile
         public void setText(int row, int column, int content){
             ViewGroup parentVG = null;
@@ -118,36 +169,63 @@ public class MainActivity extends AppCompatActivity {
             childTV.setText(Integer.toString(content));
         } // End of setText
 
-
-
             // Clear Text of tile
-        public void clearText(int row, int column){
-            ViewGroup parentVG = null;
-            TextView childTV;
+        public void clearText(int column){
+            ViewGroup parentVG = (ViewGroup)findViewById(R.id.sumTextLinear);
+            TextView childTV = (TextView)parentVG.getChildAt(column);
 
-            switch (row) {
-                case 0:
-                parentVG = (ViewGroup)findViewById(R.id.origTextLinear);
-                break;
-                case 1:
-                parentVG = (ViewGroup)findViewById(R.id.sumTextLinear);
-                break;
-                default:
-            } // End switch
-
-            childTV = (TextView)parentVG.getChildAt(column);
             childTV.setText("");
         } // End of clearText
 
     } // End of tileControl Class
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    public void menuButton (View view){
+        ViewGroup menuScreen = (ViewGroup)findViewById(R.id.menuOpened);
+
+        if (menuScreen.getVisibility() == View.GONE) {
+            menuScreen.setVisibility(View.VISIBLE);
+        } else {
+            menuScreen.setVisibility(View.GONE);
+        }
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void menuResetNumbers (View view){
+
+        ImageView clockHandIV = (ImageView)findViewById(R.id.clockhandIV);
+        clockHandIV.setVisibility(View.GONE);
+
+        startGameScreenVoid();
+        ViewGroup menu = (ViewGroup)findViewById(R.id.menuOpened);
+        menu.setVisibility(View.GONE);
+
+
+        clockHandIV.setVisibility(View.GONE);
+
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void menuNewTiles (View view){
+
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void menuShowSolution (View view){
+        gameActive = false;
+        showEquation();
+
+    }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-        // Equation operator String generator
 
+        // Equation operator String generator
     public class EqOp {
             // make an oeprator int, turned into a character + - x /
         public String toString(int x){
@@ -192,8 +270,7 @@ public class MainActivity extends AppCompatActivity {
     } // End of EqOp class
 
 
-    // -------------------------------------------------
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         // When user taps a tile. Get the tile row to determine if its big.
     public void randomTileClicked(View view){
@@ -224,19 +301,26 @@ public class MainActivity extends AppCompatActivity {
 
         totalNum = smallNum + bigNum;
         if (totalNum >= maxNum){
-            startGameScreen(view);
+            startGameScreenVoid();
         }
 
     } // end of randomTileClicked
 
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public void showEquation(View view){
+    public void showEquation(){
         EqOp eqOp = new EqOp();
         TextView boardTV = (TextView)findViewById(R.id.boardTV);
         int[] equationBuffer;
         StringBuilder stringBuffer = new StringBuilder();
+
+        if (equationLog.size() < 4 ){
+            boardTV.setTextSize(40.0f);
+        } else {
+            boardTV.setTextSize(34.0f);
+        }
+
+
 
         // main for loop iterates through lines to fill stringBuffer
 
@@ -256,12 +340,27 @@ public class MainActivity extends AppCompatActivity {
 
         boardTV.setText(stringBuffer.toString());
 
+
+        ViewGroup menu = (ViewGroup)findViewById(R.id.menuOpened);
+        menu.setVisibility(View.GONE);
+
     } // end of showEquation method
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void startGameScreenVoid(){
+
+        TextView menuTV = (TextView)findViewById(R.id.menuTV);
+        menuTV.setVisibility(View.GONE);
+        sumAL.clear();
+
+        TextView startButton = (TextView)findViewById(R.id.startButton);
+        startButton.setVisibility(View.VISIBLE);
 
 
 
-    public void startGameScreen(View view){
+        TextView boardTV = (TextView)findViewById(R.id.boardTV);
+        boardTV.setText("");
 
             // Hide choosing screen.
         ViewGroup pickerScreen = (ViewGroup)findViewById(R.id.pickerScreen);
@@ -295,10 +394,11 @@ public class MainActivity extends AppCompatActivity {
             // method to fill the origArray tiles and makes them blue
         generateTarget();
 
+        ImageView clockHandIV = (ImageView)findViewById(R.id.clockhandIV);
+        clockHandIV.setVisibility(View.GONE);
 
 
     } // end of start game screen
-
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -306,13 +406,23 @@ public class MainActivity extends AppCompatActivity {
     public void renew(View view){
         numberChooser(bigNum, smallNum);
         generateTarget();
-        ImageView clockhand = (ImageView)findViewById(R.id.clockhandIV);
-        clockhand.setVisibility(View.GONE);
         TextView startButton = (TextView)findViewById(R.id.startButton);
         startButton.setVisibility(View.VISIBLE);
+
+
     }
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     public void startTimer(View view){
+
+        TextView menu = (TextView)findViewById(R.id.menuTV);
+        menu.setVisibility(View.VISIBLE);
+
+        gameActive = true;
+        posInCalc = 0;
+        historyAL = new ArrayList<ArrayList<Integer>>();
+        historyAL.add(new ArrayList<Integer>());
 
         TextView startButton = (TextView)findViewById(R.id.startButton);
         startButton.setVisibility(View.GONE);
@@ -339,6 +449,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView clockHandIV = (ImageView)findViewById(R.id.clockhandIV);
         clockHandIV.setVisibility(View.VISIBLE);
+        clockHandIV.clearAnimation();
 
         RotateAnimation rotate = new RotateAnimation(180, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(30000);
@@ -348,16 +459,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
         // Takes big and small and generates 6x numbers, equation too but in separate method
     public void numberChooser(int big, int small){
 
         indexesForAllTiles = new ArrayList<Integer>();
-        TileControl tileControl = new TileControl();
+        // TileControl tileControl = new TileControl();
 
             // Pick indexes for the big tiles. Send it: [amount of numbers needed] [size of list to choose indexes from]
         int[] indexesForBigTiles = pickRandomTilesIndex(bigNum, bigNumsArray.length);
@@ -381,14 +489,14 @@ public class MainActivity extends AppCompatActivity {
         }
             // origArr is now filled with our 6 numbers/values
 
-        tileControl.allBlue();
+        tileControl.resetClickable();
 
             // Fill tiles with values
         for (int i=0; i<6; i++){
             tileControl.setText(0, i, origArr[i]);
         }
-        for (int i=0; i<4; i++){
-            tileControl.clearText(1, i);
+        for (int i=0; i<3; i++){
+            tileControl.clearText(i);
         }
 
             // Hide clock hand, replace with GO button
@@ -399,9 +507,7 @@ public class MainActivity extends AppCompatActivity {
 
     }   // end of numberChooser()
 
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
         // Generates array of unique index positions for one numArray
     public int[] pickRandomTilesIndex(int amount, int indexSize) {
@@ -434,13 +540,12 @@ public class MainActivity extends AppCompatActivity {
 
     }   // End of pickRandomTilesIndex()
 
-
-
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         // Devises a target answer from global origArr, and stores the workings for global equationLog
     public void generateTarget(){
+
+        Set<Integer> easyAnswerTS;
 
         // Clear target at top of screen
         TextView targetTV = (TextView)findViewById(R.id.targetTV);
@@ -665,25 +770,36 @@ public class MainActivity extends AppCompatActivity {
 
                 } // end of (coin toss) outer if
 
+
+                // Check to see if the answer can be easily/quickly made in 1 line. If so, continue while loop.
+                easyAnswerTS = new TreeSet<Integer>();
+
+                for (int i=0; i<origArr.length; i++){
+                    easyAnswerTS.add(origArr[i]);
+                    for (int j=i+1; j<origArr.length; j++){
+
+                        easyAnswerTS.add(origArr[i] + origArr[j]);
+                        easyAnswerTS.add(Math.abs(origArr[i] - origArr[j]));
+                        easyAnswerTS.add(origArr[i] * origArr[j]);
+                    }
+                }
+
+                System.out.println(easyAnswerTS);
+
+                if (easyAnswerTS.contains(finalTarget)) {
+                    gotTarget=false;
+                }
+
+
             } // (while 1) end. Made sum(s) and calc(s), have we finished though and got a potential answer?
 
 
 
         } // end of Master while 0
 
-        for (ArrayList<Integer> k : equationLog) {
-
-            System.out.println(k);
-        }
-
-        System.out.println("\n\nWe have a result for user to target: " + finalTarget);
-        System.out.println(equationLog);
-
-
     }   // End of monster generateTarget() method
 
-
-        // operatorGenerator method start
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public int[] operatorGenerator(int a, int b, int operator){
         int result, successOrFail =1;   // 0 is fail, 1 is pass
@@ -694,13 +810,14 @@ public class MainActivity extends AppCompatActivity {
             case 1: result = a-b; if (result<1){
                 successOrFail=0;
             } break;
-            case 2: result = a*b; break;
+            case 2: result = a*b; if (result == a){successOrFail=0;} break;
             case 3: if (a%b != 0){
                 successOrFail=0;
                 result = 0;
             } else {
                 divideResult = a/b;
                 result = (int)divideResult;
+                if (result == a) {successOrFail = 0;}
             } break;
             default: successOrFail = 0; result = 0;
         } // end of switch
@@ -710,9 +827,9 @@ public class MainActivity extends AppCompatActivity {
 
     } // end of operatorGenorator() method
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
-        // Make all mystery tiles 50% transparent, the pickerScreen visible, and reset tile counts to 0
+        // Make all mystery tiles 50% transparent, the gameScreen GONE, the pickerScreen VISIBLE, and reset tile counts to 0
     public void refreshPicker(View view){
 
         smallNum = 0;
@@ -747,9 +864,384 @@ public class MainActivity extends AppCompatActivity {
         }
     } // end of refreshPicker
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void tileClicked(View view){
+
+        if (gameActive && posInCalc != 1) {
+
+            Log.i("Info", "tileClicked 01");
+
+            ViewGroup parentVG;
+            ViewGroup parentVGVG;
+
+            parentVG = (ViewGroup)view.getParent();
+            parentVGVG = (ViewGroup)parentVG.getParent();
+            int row = 1;
+            int column = 0;
+
+                // Get row.
+            if ( parentVGVG == (ViewGroup)findViewById(R.id.origTileCont) ){
+                row = 0;
+                Log.i("Info", "tileClicked we clicked an origTileCont");
+            }
+
+            Log.i("Info", "tileClicked 02");
+
+                // Get column.
+            for (int i=0; i<parentVG.getChildCount(); i++){
+                Log.i("Info", "tileClicked looping...");
+                if (view == parentVG.getChildAt(i)){
+                    Log.i("Info", "tileClicked found child.");
+                    column = i;
+                    Log.i("Info", "tileClicked child(i) is: " + i);
+                    break;
+                }
+            }
+            // We now have the row and column of the tiles clicked.
+
+            if (!tileControl.isClickable(row, column)){
+                return;
+            }
+
+            Log.i("Info", "tileClicked getting textViews");
+            Log.i("Info", "tileClicked ");
+
+                // Get TextView contents
+            ViewGroup origTextLinear = (ViewGroup)parentVGVG.getChildAt(1);
+            ViewGroup origTileLinear = (ViewGroup)parentVGVG.getChildAt(0);
+            Log.i("Info", "tileClicked getting textView...");
+            TextView textView = (TextView)origTextLinear.getChildAt(column);
+            ImageView imageView = (ImageView)origTileLinear.getChildAt(column);
+            Log.i("Info", "tileClicked getting text...");
+            String tileString = (String)textView.getText();
+            Log.i("Info", "tileClicked converting text in view to int variable tileInt...");
+            int tileInt = Integer.parseInt(tileString);
 
 
 
+            boolean firstNum = (posInCalc == 0);
+
+            Log.i("Info", "tileClicked 03");
+
+            // need to have a function that passes full line of calc if we're on secondNum, and returns
+
+            // TileControl tileControl = new TileControl();
+
+
+
+            if (firstNum) {
+                historyAL.get(historyAL.size()-1).add(row);
+                historyAL.get(historyAL.size()-1).add(column);
+                historyAL.get(historyAL.size()-1).add(tileInt);
+
+                if (row == 0) {
+                    tileControl.setBG(column, "grey");
+                }
+                posInCalc++;
+
+                if (row==1){
+                    sumAL.remove(column);
+                }
+
+            } else {
+                int[] operatorReturn = operatorGenerator(historyAL.get(historyAL.size()-1).get(2), tileInt, historyAL.get(historyAL.size()-1).get(3));
+                    // Check for valid sum
+                boolean validSum = (operatorReturn[0] == 1);
+                if (!validSum){
+                    Toast.makeText(getApplicationContext(), "Invalid sum!", Toast.LENGTH_LONG).show();
+                    return;
+                } else {
+                    Toast.makeText(getApplicationContext(), "Yep.", Toast.LENGTH_LONG).show();
+                    historyAL.get(historyAL.size()-1).add(row);
+                    historyAL.get(historyAL.size()-1).add(column);
+                    historyAL.get(historyAL.size()-1).add(tileInt);
+                    tileControl.setBG(column, "grey");
+                    historyAL.get(historyAL.size()-1).add(operatorReturn[1]);
+                    posInCalc = 0;
+                    historyAL.add(new ArrayList<Integer>());
+
+                    if (row==1){
+                        sumAL.remove(column);
+                    }
+
+                    sumAL.add(operatorReturn[1]);
+
+                }
+            }
+
+            // Now to add sum to bottom row tiles text
+            // Also set the amount of tiles clickable along the bottom row
+            // But first we need to remove any sum tiles we've used in the calculation
+
+
+
+
+
+            Log.i("Info", "tileClicked 04");
+
+            tileControl.setClickable(row, column, 0);
+
+            refreshWhiteBoard();
+
+                // Pass these to if statements
+            boolean fullLines = (historyAL.size() > 1);
+            boolean currentLineEmpty = historyAL.get(historyAL.size()-1).size() == 0;
+
+                // Make sure we have at least a full line, to prevent indexOutOfBounds
+            if (fullLines){
+                    // Check to see if we have a winning answer at the end
+                if (currentLineEmpty){
+                            // Latest sum equals target, game is won
+                    if ( historyAL.get(historyAL.size()-2).get(7) == equationLog.get(equationLog.size()-1).get(3) ){
+                        Toast.makeText(getApplicationContext(), "Well done!", Toast.LENGTH_LONG).show();
+                    }
+                }
+            } // end of game won checker
+
+
+
+            tileControl.bottomFill();
+
+
+        } // end of if gameActive
+
+    } // end of tileClicked
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void operatorClicked(View view){
+
+
+
+
+
+        if (gameActive){
+
+            Log.i("Info", "operatorClicked 01");
+
+            ViewGroup operatorVG = (ViewGroup)findViewById(R.id.operatorLinear);
+            int operator = 0;
+            String operatorString;
+
+            for (int i=0; i<operatorVG.getChildCount(); i++){
+                if (view == operatorVG.getChildAt(i)){
+                    operator = i;
+                }
+            }
+
+            Log.i("Info", "operatorClicked 02");
+
+                // Clear is operator 2
+            if (operator == 2) {
+                clear();
+                return;
+            } else {
+                if (posInCalc == 1){
+                    Log.i("Info", "operatorClicked 03");
+                    if (operator > 2) {
+                        Log.i("Info", "operatorClicked 04");
+                        // Because we've messed up with clear button (01 2 34) is (+- c */)
+                        operator--;
+                    }
+                    historyAL.get(historyAL.size()-1).add(operator);
+                    posInCalc++;
+                } else {
+                        // Not ready for operator
+                    Toast.makeText(getApplicationContext(), "Tap a number tile...", Toast.LENGTH_LONG).show();
+                } // end of posInCalc
+
+            } // end of for loop
+
+
+            Log.i("Info", "operatorClicked refreshing whiteboard...");
+
+            refreshWhiteBoard();
+
+            Log.i("Info", "operatorClicked whiteboard refreshed.");
+
+
+            tileControl.bottomFill();
+
+        } // end of if gameActive
+
+    } // end of operatorClicked
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void refreshWhiteBoard(){
+        TextView boardTV = (TextView)findViewById(R.id.boardTV);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // Loop through history lines to build string lines: for i { for j{{} }
+        // Use a public String userOpToString(int operator); to convert operator int to string " + "
+        // Need to insert new line \n after each full line, but not on empty new line with null?
+        //      if (i != 0) append("\n")
+
+        Log.i("Info", "Whiteboard started.");
+
+        for (int i=0; i<historyAL.size(); i++){
+
+            Log.i("Info", "Whiteboard loop iteration started for i = " + i);
+
+            if (i != 0){
+                // print new line
+                Log.i("Info", "Whiteboard new line added.");
+                stringBuilder.append("\n");
+            }
+
+            for (int j=0; j<historyAL.get(i).size(); j++){
+                Log.i("Info", "Whiteboard loop iteration started for j = " + j);
+                switch (j){
+                    case 2: stringBuilder.append(historyAL.get(i).get(j).toString()); break;
+                    case 3: stringBuilder.append(userOpToString(historyAL.get(i).get(j))); break;
+                    case 6: stringBuilder.append(historyAL.get(i).get(j).toString()); break;
+                    case 7: stringBuilder.append(" = "); stringBuilder.append(historyAL.get(i).get(j).toString()); break;
+                } // end of switch
+            } // end of for J
+        } // end of for i
+
+        Log.i("Info", "Whiteboard loop i and j finished, setting board text...");
+
+        Log.i("Info", "historyAL(0) is: ");
+        Log.i("Info", Arrays.toString(historyAL.get(0).toArray()));
+
+        Log.i("Info", "stringBuilder is: ");
+        Log.i("Info",  stringBuilder.toString());
+
+        boardTV.setText(stringBuilder.toString());
+
+    }
+
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public String userOpToString(int operator) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" ");
+
+        switch(operator) {
+            case 0:
+                stringBuilder.append("+");
+                break;
+            case 1:
+                stringBuilder.append("-");
+                break;
+            case 2:
+                stringBuilder.append("x");
+                break;
+            case 3:
+                stringBuilder.append("/");
+                break;
+        }
+        stringBuilder.append(" ");
+
+        return stringBuilder.toString();
+    } // end of userOpToString
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        // clears the current/previous user calculation
+    public void clear(){
+
+        Log.i("Info", "Clear 01. ");
+
+        int currentLine = historyAL.size()-1;
+
+        Log.i("Info", Arrays.toString(historyAL.get(currentLine).toArray()));
+
+            // Not on 0th row -or- there is something to delete on current row
+        if (currentLine > 0 || historyAL.get(currentLine).size() > 0){
+
+                // Blank line with equation above, so remove current empty row
+            if (historyAL.get(currentLine).size() == 0){
+                historyAL.remove(historyAL.size()-1);
+                currentLine--;
+            }
+
+                // undo what is on current line
+            int arraySize = (int)historyAL.get(currentLine).size();
+            Integer[] arrayBuffer = historyAL.get(currentLine).toArray(new Integer[arraySize]);
+            undo(arrayBuffer);
+            historyAL.get(currentLine).clear();
+        }
+
+        posInCalc = 0;
+
+        refreshWhiteBoard();
+
+        tileControl.bottomFill();
+
+        Log.i("Info", "Clear 02. ");
+        Log.i("Info", Arrays.toString(sumAL.toArray()));
+
+
+
+    } // end of clear
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        // Takes array of instructions from a line of history and implements those changes in tiles
+    public void undo (Integer[] instructions){
+        //       [ 0   1   2  3   4   5   6   7 ]
+        // given [row col val op row col val sum] ... or a smaller array
+
+        // TileControl tileControl = new TileControl();
+       // int[] passToSwitch = {instructions[0], instructions[1], instructions[2]};
+        boolean flag = false;
+
+            // we are undoing a whole line, deal with sumAL tiles by deleting end sum
+        if (instructions.length > 5){
+            sumAL.remove(sumAL.size()-1);
+        }
+
+
+
+
+
+            // Makes tiles clickable again
+        for (int i=instructions.length-1; i>=0; i--){
+            switch (i){
+                case 0:
+                    tileControl.setClickable(instructions[i], instructions[i+1], 1);
+                    tileControl.setText(instructions[i], instructions[i+1], instructions[i+2]);
+                        // Add our sum value back into the tile container, where it was taken from
+                    if(instructions[i]==1) {
+                        sumAL.add(instructions[i+1], instructions[i+2]);
+                    }
+                    break;
+                case 4:
+                    tileControl.setClickable(instructions[i], instructions[i+1], 1);
+                    tileControl.setText(instructions[i], instructions[i+1], instructions[i+2]);
+                    // Remove latest sum, then add our sum value back into the tile container, where it was taken from.
+                    if(instructions[i]==1) {
+                        // sumAL.remove(sumAL.size()-1);
+                        sumAL.add(instructions[i+1], instructions[i+2]);
+                    }
+                    break;
+            } // end of switch
+
+                // Set tile to blue if top row 0
+            if (i==0 || i==4){
+                if (instructions[i] == 0){
+                    tileControl.setBG(instructions[i+1], "blue");
+                }
+            }
+
+
+
+        } // end of for
+
+
+        tileControl.bottomFill();
+
+    } // end of undo
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
