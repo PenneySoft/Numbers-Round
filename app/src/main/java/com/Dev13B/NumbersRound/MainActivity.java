@@ -870,7 +870,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (gameActive && posInCalc != 1) {
 
-            Log.i("Info", "tileClicked 01");
+            Log.i("Info", "tileClicked called with valid state.");
 
             ViewGroup parentVG;
             ViewGroup parentVGVG;
@@ -883,16 +883,12 @@ public class MainActivity extends AppCompatActivity {
                 // Get row.
             if ( parentVGVG == (ViewGroup)findViewById(R.id.origTileCont) ){
                 row = 0;
-                Log.i("Info", "tileClicked we clicked an origTileCont");
             }
 
-            Log.i("Info", "tileClicked 02");
 
                 // Get column.
             for (int i=0; i<parentVG.getChildCount(); i++){
-                Log.i("Info", "tileClicked looping...");
                 if (view == parentVG.getChildAt(i)){
-                    Log.i("Info", "tileClicked found child.");
                     column = i;
                     Log.i("Info", "tileClicked child(i) is: " + i);
                     break;
@@ -904,30 +900,17 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            Log.i("Info", "tileClicked getting textViews");
-            Log.i("Info", "tileClicked ");
-
                 // Get TextView contents
             ViewGroup origTextLinear = (ViewGroup)parentVGVG.getChildAt(1);
             ViewGroup origTileLinear = (ViewGroup)parentVGVG.getChildAt(0);
-            Log.i("Info", "tileClicked getting textView...");
             TextView textView = (TextView)origTextLinear.getChildAt(column);
             ImageView imageView = (ImageView)origTileLinear.getChildAt(column);
-            Log.i("Info", "tileClicked getting text...");
             String tileString = (String)textView.getText();
-            Log.i("Info", "tileClicked converting text in view to int variable tileInt...");
             int tileInt = Integer.parseInt(tileString);
 
 
 
             boolean firstNum = (posInCalc == 0);
-
-            Log.i("Info", "tileClicked 03");
-
-            // need to have a function that passes full line of calc if we're on secondNum, and returns
-
-            // TileControl tileControl = new TileControl();
-
 
 
             if (firstNum) {
@@ -952,7 +935,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Invalid sum!", Toast.LENGTH_LONG).show();
                     return;
                 } else {
-                    Toast.makeText(getApplicationContext(), "Yep.", Toast.LENGTH_LONG).show();
                     historyAL.get(historyAL.size()-1).add(row);
                     historyAL.get(historyAL.size()-1).add(column);
                     historyAL.get(historyAL.size()-1).add(tileInt);
@@ -970,15 +952,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            // Now to add sum to bottom row tiles text
-            // Also set the amount of tiles clickable along the bottom row
-            // But first we need to remove any sum tiles we've used in the calculation
-
-
-
-
-
-            Log.i("Info", "tileClicked 04");
 
             tileControl.setClickable(row, column, 0);
 
@@ -994,7 +967,7 @@ public class MainActivity extends AppCompatActivity {
                 if (currentLineEmpty){
                             // Latest sum equals target, game is won
                     if ( historyAL.get(historyAL.size()-2).get(7) == equationLog.get(equationLog.size()-1).get(3) ){
-                        Toast.makeText(getApplicationContext(), "Well done!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "You've reached the target!", Toast.LENGTH_LONG).show();
                     }
                 }
             } // end of game won checker
@@ -1012,13 +985,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void operatorClicked(View view){
 
-
+        Log.i("Info", "operatorClicked method started");
 
 
 
         if (gameActive){
 
-            Log.i("Info", "operatorClicked 01");
 
             ViewGroup operatorVG = (ViewGroup)findViewById(R.id.operatorLinear);
             int operator = 0;
@@ -1030,17 +1002,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            Log.i("Info", "operatorClicked 02");
-
                 // Clear is operator 2
             if (operator == 2) {
                 clear();
                 return;
             } else {
                 if (posInCalc == 1){
-                    Log.i("Info", "operatorClicked 03");
                     if (operator > 2) {
-                        Log.i("Info", "operatorClicked 04");
                         // Because we've messed up with clear button (01 2 34) is (+- c */)
                         operator--;
                     }
@@ -1054,11 +1022,11 @@ public class MainActivity extends AppCompatActivity {
             } // end of for loop
 
 
-            Log.i("Info", "operatorClicked refreshing whiteboard...");
+            Log.i("Info", "operatorClicked calling refreshWhiteBoard");
 
             refreshWhiteBoard();
 
-            Log.i("Info", "operatorClicked whiteboard refreshed.");
+            Log.i("Info", "operatorClicked finished with refreshWhiteBoard, now filling sum tiles...");
 
 
             tileControl.bottomFill();
@@ -1078,7 +1046,7 @@ public class MainActivity extends AppCompatActivity {
         // Need to insert new line \n after each full line, but not on empty new line with null?
         //      if (i != 0) append("\n")
 
-        Log.i("Info", "Whiteboard started.");
+        Log.i("Info", "refreshWhiteBoard started.");
 
         for (int i=0; i<historyAL.size(); i++){
 
@@ -1103,8 +1071,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("Info", "Whiteboard loop i and j finished, setting board text...");
 
-        Log.i("Info", "historyAL(0) is: ");
-        Log.i("Info", Arrays.toString(historyAL.get(0).toArray()));
 
         Log.i("Info", "stringBuilder is: ");
         Log.i("Info",  stringBuilder.toString());
@@ -1145,11 +1111,9 @@ public class MainActivity extends AppCompatActivity {
         // clears the current/previous user calculation
     public void clear(){
 
-        Log.i("Info", "Clear 01. ");
+        Log.i("Info", "clear method started. ");
 
         int currentLine = historyAL.size()-1;
-
-        Log.i("Info", Arrays.toString(historyAL.get(currentLine).toArray()));
 
             // Not on 0th row -or- there is something to delete on current row
         if (currentLine > 0 || historyAL.get(currentLine).size() > 0){
@@ -1172,11 +1136,6 @@ public class MainActivity extends AppCompatActivity {
         refreshWhiteBoard();
 
         tileControl.bottomFill();
-
-        Log.i("Info", "Clear 02. ");
-        Log.i("Info", Arrays.toString(sumAL.toArray()));
-
-
 
     } // end of clear
 
