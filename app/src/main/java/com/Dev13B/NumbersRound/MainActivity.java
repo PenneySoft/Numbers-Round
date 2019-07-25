@@ -1,8 +1,6 @@
 package com.Dev13B.NumbersRound;
 
 import android.animation.ObjectAnimator;
-import android.media.Image;
-import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
