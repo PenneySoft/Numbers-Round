@@ -204,6 +204,43 @@ public class MainActivity extends AppCompatActivity {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public void menuNewTiles (View view){
+        ViewGroup pickerScreen = (ViewGroup)findViewById(R.id.pickerScreen);
+        ViewGroup gameScreen = (ViewGroup)findViewById(R.id.gameScreen);
+
+        ObjectAnimator animation = ObjectAnimator.ofFloat(gameScreen, "translationX", 1500f);
+        animation.setDuration(500);
+        animation.start();
+
+        // Show pickerScreen
+        pickerScreen.setVisibility(View.VISIBLE);
+
+        ViewGroup group = (ViewGroup)findViewById(R.id.bigBacking);
+        ImageView child;
+
+        for (int i=0; i<2; i++){
+            for (int j=0; j<group.getChildCount(); j++){
+                child = (ImageView)group.getChildAt(j);
+                child.setAlpha(1.0f);
+            }
+            group = (ViewGroup)findViewById(R.id.smallBacking);
+        }
+
+        pickerScreen.setTranslationX(-1500f);
+
+        ObjectAnimator animation2 = ObjectAnimator.ofFloat(pickerScreen, "translationX", 0f);
+        animation2.setDuration(500);
+        animation2.start();
+
+        ImageView background = (ImageView)findViewById(R.id.backgroundIV);
+        ObjectAnimator animationBG = ObjectAnimator.ofFloat(background, "translationX", 50f);
+        animationBG.setDuration(500);
+        animationBG.start();
+
+        bigNum = 0;
+        smallNum = 0;
+        totalNum = 0;
+
+        origArr = new int[6];
 
     }
 
@@ -222,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
         // Equation operator String generator
     public class EqOp {
             // make an oeprator int, turned into a character + - x /
-        public String toString(int x){
+        private String toString(int x){
             String string = "";
             switch (x) {
                 case 0:
@@ -244,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
         } // End of toString()
 
             // Take an equation in int form, and return a user-readable string for ArrayList<String>
-        public String toLine(int[] arr){
+        private String toLine(int[] arr){
             // Given arr as: 10 + 5 = 15
             // e.g.   arr: 10 1 5 15
             // Turn this into a string
@@ -1210,4 +1247,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-}
+} // End of Main Activity
