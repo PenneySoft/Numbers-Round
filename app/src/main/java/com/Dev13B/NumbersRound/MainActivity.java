@@ -217,13 +217,24 @@ public class MainActivity extends AppCompatActivity {
         ViewGroup group = (ViewGroup)findViewById(R.id.bigBacking);
         ImageView child;
 
-        for (int i=0; i<2; i++){
-            for (int j=0; j<group.getChildCount(); j++){
-                child = (ImageView)group.getChildAt(j);
+        for (int i=0; i<group.getChildCount(); i++){
+            child = (ImageView)group.getChildAt(i);
+            child.setAlpha(1.0f);
+        }
+
+        group = (ViewGroup)findViewById(R.id.smallBacking);
+        ViewGroup smallGroup;
+
+        for (int i=0; i<group.getChildCount(); i++){
+            smallGroup = (ViewGroup)group.getChildAt(i);
+            for (int j=0; j<smallGroup.getChildCount(); j++){
+                child = (ImageView)smallGroup.getChildAt(j);
                 child.setAlpha(1.0f);
             }
-            group = (ViewGroup)findViewById(R.id.smallBacking);
         }
+
+
+
 
         pickerScreen.setTranslationX(-1500f);
 
