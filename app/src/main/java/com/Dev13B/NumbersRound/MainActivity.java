@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i=0; i<group.getChildCount(); i++){
             child = (ImageView)group.getChildAt(i);
-            child.setAlpha(1.0f);
+            child.setAlpha(0.5f);
         }
 
         group = (ViewGroup)findViewById(R.id.smallBacking);
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
             smallGroup = (ViewGroup)group.getChildAt(i);
             for (int j=0; j<smallGroup.getChildCount(); j++){
                 child = (ImageView)smallGroup.getChildAt(j);
-                child.setAlpha(1.0f);
+                child.setAlpha(0.5f);
             }
         }
 
@@ -316,6 +316,16 @@ public class MainActivity extends AppCompatActivity {
 
         // When user taps a tile. Get the tile row to determine if its big.
     public void randomTileClicked(View view){
+
+        ViewGroup gameScreen = (ViewGroup)findViewById(R.id.gameScreen);
+        if (gameScreen.getVisibility() == View.VISIBLE){
+            gameScreen.setVisibility(View.GONE);
+
+            ViewGroup menu = (ViewGroup)findViewById(R.id.menuOpened);
+            menu.setVisibility(View.GONE);
+            ImageView clockhand = (ImageView)findViewById(R.id.clockhandIV);
+            clockhand.setVisibility(View.GONE);
+        }
 
         Boolean bigFlag = false;
 
