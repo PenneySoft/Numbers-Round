@@ -11,6 +11,6 @@
 
 <img style="width:50px;height:50px;" src="https://i.ibb.co/Kjt74SP/01start.png"><img style="max-width:200px;height:auto;" src="https://i.ibb.co/5FfSVp1/03target.png">
 
-<img style="max-width:50%;height:auto;" src="https://i.ibb.co/Y067smp/05calculating.png"><img style="max-width:50%;height:auto;" src="https://i.ibb.co/K9SLLz1/06menu.png">
+<img style="width: 50px" src="https://i.ibb.co/Y067smp/05calculating.png"><img style="max-width:50%;height:auto;" src="https://i.ibb.co/K9SLLz1/06menu.png">
 
 <img style="max-width:50%;height:auto;" src="https://i.ibb.co/MpN8hpQ/07solutionshow.png">
