@@ -5,3 +5,6 @@
 - Features an attractive UI, calculator with error checking, as well as a 'Solution Finder' that generates an equation using the randomly selected tiles to reach the target value.
 
 - All images / icons etc are either own content or royalty-free.
+
+
+https://i.ibb.co/4YYB9pt/App-Landing-Page.jpg
