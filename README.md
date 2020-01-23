@@ -6,7 +6,7 @@
 
 - All images / icons etc are either own content or royalty-free.
 
-<div style="display: flex;flex-wrap: wrap;align-content: center;">
+<div align="center">
 <img style="max-width:100%;height:auto;" src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/LandingPage.jpg?raw=true">
 
 
