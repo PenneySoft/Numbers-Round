@@ -12,12 +12,12 @@
 
 Select Large or Small tiles to randomly pick numbers
 
-<img src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/01.png?raw=true">&nbsp;<img src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/02.png?raw=true">
+<img src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/01.png?raw=true">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/02.png?raw=true">
 
 
 Use the in-built <strong><u>Calculator</u></strong> to reach the target with ability to <strong><u>Undo</u></strong> previous line(s)
 
-<img src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/03.png?raw=true">&nbsp;<img src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/04.png?raw=true">
+<img src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/03.png?raw=true">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/04.png?raw=true">
 
 
 Ability to have the App <strong><u>solve</u></strong> the current problem
