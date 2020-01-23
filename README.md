@@ -6,7 +6,7 @@
 
 - All images / icons etc are either own content or royalty-free.
 
-<center>
+<div style="align-content: center;">
 <img style="max-width:100%;height:auto;" src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/LandingPage.jpg?raw=true">
 
 
@@ -23,4 +23,4 @@ Use the in-built <strong><u>Calculator</u></strong> to reach the target with abi
 Ability to have the App <strong><u>solve</u></strong> the current problem
 
 <img src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/05.png?raw=true">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/PenneySoft/Numbers-Round/blob/master/assets/07.png?raw=true">
-</center>
+</div>
