@@ -7,4 +7,4 @@
 - All images / icons etc are either own content or royalty-free.
 
 
-https://i.ibb.co/4YYB9pt/App-Landing-Page.jpg
+<img src="https://i.ibb.co/4YYB9pt/App-Landing-Page.jpg">
